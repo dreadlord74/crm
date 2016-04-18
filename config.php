@@ -1,7 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 12:10
- */
+defined ("SCRIPT") or die ("Сюда нельзя!");
+//домен
+define("PATH", "http://localhost/crm/");
+//модель
+define("MODELS", "models/model.php");
+//классы
+define("CLASSES", "models/classes/");
+//контроллер
+define("CONTROLLERS", "controllers/controller.php");
+//виды
+define("VIEW", "views/default");
+//сервер
+define("HOST", "127.0.0.1");
+//пользователь
+define("USER", "root");
+//пароль
+define("PASS", "890888");
+//имя бд
+define("DB", "crm");
+//Название - title
+define("TITLE","ЦРМ");
+
+//Токен для доступа к аккуанту
+error_reporting ( E_ALL ^ E_NOTICE);
