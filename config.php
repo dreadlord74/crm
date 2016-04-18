@@ -7,7 +7,10 @@ define("MODELS", "models/model.php");
 //классы
 define("CLASSES", "models/classes/");
 //контроллер
-define("CONTROLLERS", "controllers/controller.php");
+define("CONTROLLER", "controllers/controller.php");
+
+//контроллеры
+define("CONTROLLERS", "controllers/");
 //виды
 define("VIEW", "views/default");
 //сервер
@@ -18,7 +21,8 @@ define("USER", "root");
 define("PASS", "890888");
 //имя бд
 define("DB", "crm");
-//Название - title
+
+//Название
 define("TITLE","ЦРМ");
 
 //Токен для доступа к аккуанту
