@@ -1,7 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 12:15
- */
+ define ("SCRIPT", TRUE);
+
+require_once("config.php");
+
+require_once CONTROLLERS;
