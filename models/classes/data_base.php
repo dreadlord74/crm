@@ -105,7 +105,7 @@ class data_base
      * Запрос в БД, который задает результат
      * @param string $query - запрос
      * @param bool $multi - устанавливает нужно ли вернуть всего одну строку из БД (false - да, True - нет)
-     * @return $this
+     * @return array
      */
     public function super_query($query, $multi=true){
         if($multi){
@@ -124,7 +124,7 @@ class data_base
             //print_r($this->result);
         }
         $this->rows($this->q_id);
-        return $this;
+        return $this->get_res();
     }
     /**
      * @param $error
