@@ -24,7 +24,14 @@ class departament{
 
         $query = "SELECT * FROM departament";
 
-        return $this->db->super_query($query, true);
+        return $this->db->super_query($query);
 
+    }
+
+    public function add($name){
+        $query = "INSERT INTO departament ('name') VALUES ".$name;
+
+        $this->db->query($query);
+        return $this;
     }
 }
