@@ -1,7 +1,60 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 12:59
- */
+<table class="table" style="overflow:scroll; max-width:300%; width: 150%;">
+    <thead>
+    <tr style="background:#00BFFF">
+        <th class="small"></th>
+        <th style="width: 40px;"></th>
+        <th class="small"></th>
+        <th colspan="13" otdel='1' style="text-align:center">Отдел-1</th>
+        <th colspan="7" otdel='2' style="text-align:center">Отдел-2</th>
+        <th colspan="4" otdel='3' style="text-align:center">Отдел-3</th>
+        <th colspan="3" otdel='4' style="text-align:center">Отдел-4</th>
+    </tr>
+    <tr>
+        <th>месяц</th>
+        <th>дата</th>
+        <th>день недели</th>
+        <th otdel='1' rab='1' colspan="4">Работник отдел-1</th>
+        <th otdel='1' rab='2' colspan="2">Работник2 отдел-1</th>
+        <th otdel='1' rab='3' colspan="6">Работник3 отдел-1</th>
+        <th></th>
+        <th colspan="2">Работник отдел-2</th>
+        <th colspan="2">Работник2 отдел-2</th>
+        <th colspan="2">Работник3 отдел2</th>
+        <th></th>
+        <th>Работник отдел-3</th>
+        <th>Работник2 отдел-3</th>
+        <th>Работник3 отдел3</th>
+        <th></th>
+        <th>Работник отдел-4</th>
+        <th>Работник2 отдел-4</th>
+        <th>Работник3 отдел4</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>апрель</td>
+        <td>15.04.16</td>
+        <td>пт</td>
+        <td otdel='1' rab='1' work='1'>какая-то работа</td>
+        <td>8</td>
+        <td otdel='1' rab='1' work='2'>какая-то работа2</td>
+        <td>8</td>
+        <td otdel='1' rab='2' work='1'>какая-то работа</td>
+        <td>8</td>
+        <td otdel='1' rab='2' work='1'>какая-то работа</td>
+        <td>8</td>
+        <td>какая-то работа2</td>
+        <td>8</td>
+        <td>какая-то работа3</td>
+        <td>8</td>
+        <td>пт</td>
+        <td>какая-то работа</td>
+        <td>8</td>
+        <td>какая-то работа</td>
+        <td>8</td>
+        <td>какая-то работа</td>
+        <td>8</td>
+        <td>пт</td>
+    </tr>
+    </tbody>
+</table>
