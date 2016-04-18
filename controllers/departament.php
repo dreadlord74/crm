@@ -1,7 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 13:51
- */
+
+defined("SCRIPT") or die;
+
+$dep = new departament();
+
+switch ($do){
+    case "add":
+
+        $dep->add($_POST[name]);
+        exit();
+
+        break;
+
+    case "view_add":
+
+        $view = "/departament/".$do;
+
+        break;
+
+    default:
+
+        $view = "departament/view";
+}
