@@ -1,0 +1,9 @@
+.small{
+	width: 10px;
+}
+
+thead th,
+tbody td {
+	border-left: 1px solid #000;
+	text-align:center
+}
