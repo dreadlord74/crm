@@ -4,8 +4,6 @@ defined("SCRIPT") or die;
 
 require_once MODELS;
 
-$mysqli = new data_base();
-
 $view = ($_GET['view'] ? $_GET['view'] : "mainTable");
 
 switch ($view){
