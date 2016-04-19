@@ -1,12 +1,22 @@
 <?php
 
+defined("SCRIPT") or die;
 /**
  * Created by PhpStorm.
- * User: sp
+ * User: Данил Хандысь
  * Date: 18.04.2016
  * Time: 13:38
+ *
  */
-class interfaces
-{
 
+/**
+ * Interface base
+ * Базовый интерфейс:
+ * Добавление, удаление, изменение, получение записей
+ */
+interface base
+{
+    function get_name_by_id($id);
+
+    function get_all();
 }
