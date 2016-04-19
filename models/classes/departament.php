@@ -6,23 +6,23 @@
  * Time: 13:25
  */
 
-class departament{
+class departament extends abstract_class implements base{
     public $id;
     public $name;
 
-    private $db;
+    public function get_name_by_id($id)
+    {
+        // TODO: Implement get_name_by_id() method.
 
-   function __construct (){
-       global $mysqli;
+        $name = $this->db->super_query("SELECT name FROM departaments WHERE id=".$id, false);
 
-       $this->db = $mysqli;
-   }
-
+        return $name[name];
+    }
 
     public function get_all(){
 
 
-        $query = "SELECT * FROM departament";
+        $query = "SELECT * FROM departments";
 
         return $this->db->super_query($query);
 
