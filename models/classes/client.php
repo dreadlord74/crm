@@ -20,6 +20,6 @@ class client extends abstract_class implements base
     {
         // TODO: Implement get_all() method.
 
-        return $this->db->super_query("SELECT * FROM clients");
+        return $this->db->super_query("SELECT * FROM clients ORDER BY priority");
     }
 }
