@@ -1,7 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 14:55
- */
+
+defined("SCRIPT") or die;
+
+$dep = new departament();
+
+$worker = new Worker();
+
+$client = new client();
+
+$main_table = $mysqli->super_query("SELECT * FROM work_table");
