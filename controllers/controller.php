@@ -19,6 +19,12 @@ switch ($view){
 
         break;
 
+    case "client":
+
+        require_once "client.php";
+
+        break;
+
     case "mainTable":
         require_once "mainTable.php";
 
