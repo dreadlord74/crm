@@ -17,5 +17,15 @@
     require_once ($view.".php");
 
 ?>
+<div class="row menu">
+    <div class="col-lg-10">
+        <ul class="center-block list-inline">
+            <li><a href="/">Основная таблица</a> </li>
+            <li><a href="/?view=dep">Отделы</a> </li>
+            <li><a href="/?view=client">Клиенты</a> </li>
+            <li><a href="/?view=dep">Работники</a> </li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
