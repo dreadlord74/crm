@@ -7,7 +7,7 @@ $dep = new departament();
 switch ($do){
     case "add":
 
-        $dep->add($_POST[name]);
+        echo json_encode($dep->add($_POST[name]));
         exit();
 
         break;
@@ -16,6 +16,20 @@ switch ($do){
 
         $view = "/departament/".$do;
 
+        break;
+
+    case "write":
+
+        echo $dep->write($_POST[id], $_POST[name]);
+
+        exit();
+        break;
+
+    case "del":
+
+        echo $dep->delete($_POST[id]);
+
+        exit();
         break;
 
     default:
