@@ -3,4 +3,4 @@
 
 require_once("config.php");
 
-require_once CONTROLLERS;
+require_once CONTROLLER;
