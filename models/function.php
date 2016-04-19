@@ -1,7 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.04.2016
- * Time: 14:00
- */
+
+/*
+function disassemble(&$mass){
+    foreach($mass as $key => $value)
+        ${$key} = $value;
+}*/
