@@ -10,8 +10,10 @@ class client extends abstract_class implements base
 {
     public function get_name_by_id($id)
     {
-        // TODO: Implement get_name_by_id() method.
-        $name = $this->db->super_query("SELECT name FROM clients WHERE id=".$id, false);
+        if (!$id)
+            $name = "";
+        else
+            $name = $this->db->super_query("SELECT name FROM clients WHERE id=".$id, false);
 
         return $name[name];
     }
@@ -21,5 +23,11 @@ class client extends abstract_class implements base
         // TODO: Implement get_all() method.
 
         return $this->db->super_query("SELECT * FROM clients ORDER BY priority");
+    }
+
+    public function get_color_by_id($id){
+        $color = $this->db->super_query("SELECT color FROM clients WHERE id=".$id, false);
+
+        return $color[color];
     }
 }
