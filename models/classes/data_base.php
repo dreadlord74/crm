@@ -77,6 +77,11 @@ class data_base
         $this->rows = mysqli_num_rows($id);
         return $this;
     }
+
+    public function affected(){
+        return mysqli_affected_rows($this->db);
+    }
+
     /**
      * Метод для записи логов в БД
      * @param $action_id - id действия, которое совершил пользователь
