@@ -11,31 +11,41 @@
     <tr>
         <th>месяц</th>
         <th>дата</th>
-        <th>день недели</th>
+        <th>день</th>
         <?foreach ($dep->get_all() as $value):?>
             <?foreach($worker->get_by_dep_id($value[id]) as $item):?>
-                <th otdel='<?=$value[id]?>' rab='<?=$item[id]?>' colspan="<?=$item[cols]?>"><?=$item[fam]." ".$item[name]?></th>
+                <th otdel='<?=$value[id]?>' rab='<?=$item[id]?>' colspan="<?=$item[cols]?>"><?=$item[name]." ".$item[fam]?></th>
             <?endforeach?>
             <th></th>
         <?endforeach?>
     </tr>
     </thead>
     <tbody>
-    <?foreach ($main_table as $tKey => $table):?>
-        <tr>
-            <td>апрель</td>
-            <td>15.04.16</td>
-            <td>пт</td>
-            <td otdel='1' rab='1' work='1'>какая-то работа</td>
-            <td>8</td>
-            <td>пт</td>
-            <td otdel='1' rab='2' work='1'>какая-то работа</td>
-            <td>8</td>
-            <td>какая-то работа2</td>
-            <td>8</td>
-            <td>какая-то работа2</td>
-            <td>8</td>
-            <td>пт</td>
+    <?foreach ($date->get_all() as $item):?>
+        <tr <?=($item[day] == "пн" ? "style='border-top:1px solid #000;": "")?>>
+            <td><?=$item[moth]?></td>
+            <td><?=$item[date]?></td>
+            <td><?=$item[day]?></td>
+
+            <?foreach($dep->get_all() as $ids):?>
+                <?foreach($worker->get_by_dep_id($ids[id]) as $key => $workers):?>
+                    <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
+                    <?foreach ($mainT as $work):?>
+                        <td style="background: <?=$client->get_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work='<?=$work[client_id]?>'><?=$client->get_name_by_id($work[client_id])?></td>
+                        <td style="background: <?=$client->get_color_by_id($work[client_id])?>"><?=$work[time]?></td>
+                    <?endforeach?>
+                    <?
+                        if (count($mainT) < $workers[cols]/2){
+                            //доделать
+                            $it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
+                            if ($key == 1) $it = -2;
+                            for ($i = $it; $i <= ($workers[cols]/2); $i++)
+                                echo "<td otdel='{$ids[id]}' rab='{$workers[id]}'></td>";
+                        }
+                    ?>
+                <?endforeach?>
+                <td><?=$item[day]?></td>
+            <?endforeach?>
         </tr>
     <?endforeach?>
     </tbody>
