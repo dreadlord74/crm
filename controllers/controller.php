@@ -14,17 +14,16 @@ $do = ($_GET['do'] ? $_GET['do'] : "nothing");
 switch ($view){
 
     case "dep":
-        echo 123;
-        require_once CONTROLLERS."departament.php";
+
+        require_once "departament.php";
 
         break;
 
     case "mainTable":
+        require_once "mainTable.php";
+
 
         break;
-
-    default:
-        $view = "mainTable";
 }
 
 require_once (VIEW."/index.php");
