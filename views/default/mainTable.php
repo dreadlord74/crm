@@ -24,7 +24,7 @@
     <?foreach ($date->get_all() as $item):?>
         <tr <?=($item[day] == "пн" ? "style='border-top:1px solid #000;": "")?>>
             <td><?=$item[moth]?></td>
-            <td><?=$item[date]?></td>
+            <td><?=change_date_view($item[date])?></td>
             <td><?=$item[day]?></td>
 
             <?foreach($dep->get_all() as $ids):?>
