@@ -1,7 +1,7 @@
 <?php
 defined ("SCRIPT") or die ("Сюда нельзя!");
 //домен
-define("PATH", "http://localhost/crm/");
+define("PATH", "http://192.168.1.45/");
 //модель
 define("MODELS", "models/model.php");
 //классы
