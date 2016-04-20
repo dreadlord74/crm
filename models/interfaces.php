@@ -19,4 +19,10 @@ interface base
     function get_name_by_id($id);
 
     function get_all();
+
+    function delete($id);
+
+    function write($id, $name, $priority = "");
+
+    function get_priority_by_id($id);
 }
