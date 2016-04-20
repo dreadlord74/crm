@@ -1442,6 +1442,9 @@ ol ol {
   padding-left: 5px;
   padding-right: 5px;
 }
+.list-inline > li:not(:first-child){
+  margin-top: 7px;
+}
 dl {
   margin-top: 0;
   margin-bottom: 23px;
@@ -2276,9 +2279,9 @@ th {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.846;
-  vertical-align: top;
+ /* padding: 8px;
+  line-height: 1.846;*/
+  vertical-align: middle;
   border-top: 1px solid #dddddd;
 }
 .table > thead > tr > th {
