@@ -8,6 +8,11 @@
  */
 class client extends abstract_class implements base
 {
+    public function get_priority_by_id($id)
+    {
+        // TODO: Implement get_priority_by_id() method.
+    }
+
     public function get_name_by_id($id)
     {
         if (!$id)
@@ -29,5 +34,25 @@ class client extends abstract_class implements base
         $color = $this->db->super_query("SELECT color FROM clients WHERE id=".$id, false);
 
         return $color[color];
+    }
+
+    private function change_priority($id, $priority){
+
+    }
+
+    public function write($id, $name, $priority = "")
+    {
+        // TODO: Implement write() method.
+    }
+
+    public function add ($name, $date, $way, $work_type, $contract_number, $color, $text_color){
+
+        $id = $this->db->query("INSERT INTO clients (name, `date`, way, work_type, contract_number, color, text_color) VALUES ('$name', '$way')");
+
+    }
+
+    public  function delete($id)
+    {
+        // TODO: Implement delete() method.
     }
 }
