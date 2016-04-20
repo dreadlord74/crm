@@ -6,6 +6,8 @@ defined ("SCRIPT") or die ("Сюда нельзя!");
  */
 session_start();
 
+require_once ("function.php");
+
 require_once ("classes/data_base.php");
 $mysqli = new data_base();
 
