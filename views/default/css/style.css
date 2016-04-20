@@ -16,5 +16,10 @@ tbody td {
 .menu{
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	left: 10px;
+	background: #e6e6e6;
+}
+
+.xd li:not(:first-child){
+	margin-top: 7px;
 }
