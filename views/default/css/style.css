@@ -7,3 +7,14 @@ tbody td {
 	border-left: 1px solid #000;
 	text-align:center
 }
+
+.control{
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.menu{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
