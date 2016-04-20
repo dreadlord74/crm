@@ -1,7 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 19.04.2016
- * Time: 16:44
- */
+
+defined("SCRIPT") or die;
+
+switch ($do){
+    case "add":
+
+        break;
+
+    default:
+        $view = "client/view";
+
+        break;
+}
