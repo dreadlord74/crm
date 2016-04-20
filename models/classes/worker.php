@@ -25,11 +25,23 @@ class worker extends abstract_class implements base {
         return $name[name];
     }
 
+    public function get_cols_by_id($id){
+        $cols = $this->db->super_query("SELECT cols FROM workers WHERE id=".$id, false);
+
+        return $cols[cols];
+    }
+
+    public function get_worker_by_date_id($id){
+        $query = "SELECT * FROM";
+
+        return $this->db->super_query("SELECT * FROM work_table WHERE date_id=".$id);
+    }
+
     public function get_all()
     {
         // TODO: Implement get_all() method.
 
-        return $this->db->super_query("SELECT * FROM workers");
+        return $this->db->super_query("SELECT * FROM workers ORDER BY priority");
     }
 
     public function get_by_dep_id($id){
