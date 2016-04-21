@@ -1,6 +1,7 @@
-<table class="table" style="overflow:scroll; max-width:300%;">
+<script type="text/javascript" src="<?=VIEW?>/js/main.js"></script>
+<table class="table" style="overflow:scroll; max-width:300%; width: 130%">
     <thead>
-    <tr style="background:#00BFFF">
+    <tr style="background:#00BFFF; color: #fff;">
         <th class="small"></th>
         <th style="width: 40px;"></th>
         <th class="small"></th>
@@ -31,16 +32,19 @@
                 <?foreach($worker->get_by_dep_id($ids[id]) as $key => $workers):?>
                     <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
                     <?foreach ($mainT as $work):?>
-                        <td style="background: <?=$client->get_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work='<?=$work[client_id]?>'><?=$client->get_name_by_id($work[client_id])?></td>
-                        <td style="background: <?=$client->get_color_by_id($work[client_id])?>"><?=$work[time]?></td>
+                        <td work-id="<?=$work[id]?>" class="td" style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work='<?=$work[client_id]?>'>
+                            <?=$client->get_name_by_id($work[client_id])." (".$client->get_way_by_id($work[client_id]).") ".$work_type[$client->get_work_type_by_id($work[client_id])]?>
+                            <textarea class="hidden-text" name="description"><?=$work[description]?></textarea>
+                        </td>
+                        <td style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>"><input class="time-input" work-id="<?=$work[id]?>" type="text" name="time" value="<?=$work[time]?>"/></td>
                     <?endforeach?>
                     <?
                         if (count($mainT) < $workers[cols]/2){
                             //доделать
-                            $it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
-                            if ($key == 1) $it = -2;
-                            for ($i = $it; $i <= ($workers[cols]/2); $i++)
-                                echo "<td otdel='{$ids[id]}' rab='{$workers[id]}'></td>";
+                            //$it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
+                           // if ($key == 1) $it = 2;
+                            for ($i = count($mainT); $i < ($workers[cols]/2); $i++)
+                                echo "<td otdel='{$ids[id]}' rab='{$workers[id]}'></td><td><input class='time-input' type='text' name='time' value=''/></td>";
                         }
                     ?>
                 <?endforeach?>
