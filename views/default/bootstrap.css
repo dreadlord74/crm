@@ -2279,8 +2279,8 @@ th {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
- /* padding: 8px;
-  line-height: 1.846;*/
+  padding: 3px 5px;
+  /*line-height: 1.846;*/
   vertical-align: middle;
   border-top: 1px solid #dddddd;
 }
@@ -7032,6 +7032,7 @@ input[type=number],
 [type=tel].form-control,
 [contenteditable].form-control {
   padding: 0;
+  text-indent: 8px;
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
