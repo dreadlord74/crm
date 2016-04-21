@@ -4,13 +4,14 @@
 
 thead th,
 tbody td {
-	border-left: 1px solid #000;
+	border-left: 1px solid #dddddd;
 	text-align:center
 }
 
 .control{
 	cursor: pointer;
 	margin-left: 10px;
+	margin-bottom: 10px;
 }
 
 .menu{
@@ -23,3 +24,49 @@ tbody td {
 .xd li:not(:first-child){
 	margin-top: 7px;
 }
+
+.xd li{
+	position: relative;
+}
+
+	.xd li > input[type=text]:not([name=all]){
+		display: none;
+	}
+
+input[type=color]{
+	display: none;
+}
+
+#bg-color{
+
+}
+
+.td{
+	position:relative;
+	cursor: pointer;
+}
+
+	.hidden-text{
+		position: absolute;
+		display: none;
+		z-index: 5;
+		width: 200px;
+		height: 150px;
+		color: #000;
+		border: 1px solid #e6e6e6;
+	}
+
+.time-input{
+	width: 15px;
+	height: inherit;
+	border: none !important;
+	margin: 0;
+	padding: 0 !important;
+	text-indent: 4px !important;
+	box-shadow: none !important;
+	margin-left: -3px;
+	margin-top: 0px;
+	background: inherit;
+}
+
+
