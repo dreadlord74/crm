@@ -22,7 +22,7 @@ interface base
 
     function delete($id);
 
-    function write($id, $name, $priority = "");
+    //function write($id, $name, $priority = "");
 
     function get_priority_by_id($id);
 }
