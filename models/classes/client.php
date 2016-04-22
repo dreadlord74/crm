@@ -25,9 +25,11 @@ class client extends abstract_class implements base
 
     public function get_all()
     {
-        // TODO: Implement get_all() method.
-
         return $this->db->super_query("SELECT * FROM clients ORDER BY priority");
+    }
+
+    public function search($search){
+        return $this->db->super_query("SELECT * FROM clients WHERE name LIKE '%$search%' OR clients.name LIKE '$search%' OR clients.name LIKE '%$search'");
     }
 
     public function get_color_by_id($id){
