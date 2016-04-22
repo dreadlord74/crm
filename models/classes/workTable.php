@@ -19,4 +19,23 @@ class workTable extends abstract_class
     public function write_time($id, $time){
         return $this->db->query("UPDATE work_table SET time='$time' WHERE id=$id")->affected();
     }
+
+    public function add_date($last_date){
+
+        $time = (strtotime(date("d-m-Y")) - strtotime($last_date));
+
+        if (FUTURE_DATES - ($time/60/60/24) < FUTURE_DATES){
+            global $date;
+
+            $date_ids = array();
+
+            for ($i = 1; $i <= FUTURE_DATES-($time/60/60/24); $i++) {
+                $date_ids[] = $date->add(date('Y-m-d', strtotime($last_date . " +" . $i . " day")));
+                //echo date("d m Y", strtotime("$last_date + $i day"));
+            }
+            return $date_ids;
+        }
+    }
+
+
 }
