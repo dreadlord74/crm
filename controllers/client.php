@@ -21,6 +21,13 @@ switch ($do){
         exit();
         break;
 
+    case "get_clients":
+
+        echo json_encode($client->search($_POST[search]));
+
+        exit();
+        break;
+
     default:
         $view = "client/view";
 
