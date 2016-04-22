@@ -28,6 +28,14 @@ switch ($do){
 
         exit();
         break;
+
+    case "add_work":
+
+        echo $main->add_work($_POST[date_id], $_POST[dep_id], $_POST[client_id], $_POST[worker_id]);
+
+        exit();
+        break;
+
     default:
 
         break;
