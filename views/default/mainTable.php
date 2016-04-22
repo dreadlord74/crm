@@ -1,4 +1,21 @@
 <script type="text/javascript" src="<?=VIEW?>/js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".th > img").click(function(){
+            var data = "worker_id="+$(this).parent(".th").attr("rab");
+            alert(data);
+            $.ajax({
+                url: "./?view=worker&do=add_column",
+                type: "POST",
+                data: data,
+                success: function (data){
+                    alert(data);
+                    document.location.href = "<?=PATH.$_SERVER[REQUEST_URI]?>";
+                }
+            });
+        });
+    });
+</script>
 <table class="table" style="overflow:scroll; max-width:300%; width: 130%">
     <thead>
     <tr style="background:#00BFFF; color: #fff;">
@@ -15,7 +32,7 @@
         <th>день</th>
         <?foreach ($dep->get_all() as $value):?>
             <?foreach($worker->get_by_dep_id($value[id]) as $item):?>
-                <th otdel='<?=$value[id]?>' rab='<?=$item[id]?>' colspan="<?=$item[cols]?>"><?=$item[name]." ".$item[fam]?></th>
+                <th class="th" otdel='<?=$value[id]?>' rab='<?=$item[id]?>' colspan="<?=$item[cols]?>"><?=$item[name]." ".$item[fam]?><img src="<?=VIEW?>/img/add.png"></th>
             <?endforeach?>
             <th></th>
         <?endforeach?>
@@ -33,7 +50,7 @@
                     <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
                     <?foreach ($mainT as $work):?>
                         <td work-id="<?=$work[id]?>" class="td" style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work='<?=$work[client_id]?>'>
-                            <?=$client->get_name_by_id($work[client_id])." (".$client->get_way_by_id($work[client_id]).") ".$work_type[$client->get_work_type_by_id($work[client_id])]?>
+                            <input style="color: <?=$client->get_text_color_by_id($work[client_id])?>" disabled="disabled" type="text" name="work"  value='<?=$client->get_name_by_id($work[client_id])." (".$client->get_way_by_id($work[client_id]).") ".$work_type[$client->get_work_type_by_id($work[client_id])]?>' />
                             <textarea class="hidden-text" name="description"><?=$work[description]?></textarea>
                         </td>
                         <td style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>"><input class="time-input" work-id="<?=$work[id]?>" type="text" name="time" value="<?=$work[time]?>"/></td>
@@ -44,7 +61,7 @@
                             //$it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
                            // if ($key == 1) $it = 2;
                             for ($i = count($mainT); $i < ($workers[cols]/2); $i++)
-                                echo "<td otdel='{$ids[id]}' rab='{$workers[id]}'></td><td><input disabled='disabled' class='time-input' type='text' name='time' value=''/></td>";
+                                echo "<td class='td' otdel='{$ids[id]}' rab='{$workers[id]}'> <input type='text' name='work'  value='' /></td><td><input disabled='disabled' class='time-input' type='text' name='time' value=''/></td>";
                         }
                     ?>
                 <?endforeach?>
@@ -63,11 +80,11 @@
                     <?foreach($worker->get_by_dep_id($ids[id]) as $key => $workers):?>
                         <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
                         <?foreach ($mainT as $work):?>
-                            <td work-id="<?=$work[id]?>" class="td" style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work='<?=$work[client_id]?>'>
-                                <input disabled="disabled" type="text" name="123" value='<?=$client->get_name_by_id($work[client_id])." (".$client->get_way_by_id($work[client_id]).") ".$work_type[$client->get_work_type_by_id($work[client_id])]?>' />
+                            <td work-id="<?=$work[id]?>" class="td" style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work=''>
+                                <input style="color: <?=$client->get_text_color_by_id($work[client_id])?>" type="text" name="work" value='' />
                                 <textarea class="hidden-text" name="description"><?=$work[description]?></textarea>
                             </td>
-                            <td style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>"><input class="time-input" work-id="<?=$work[id]?>" type="text" name="time" value="<?=$work[time]?>"/></td>
+                            <td style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>"><input class="time-input" work-id="<?=$work[id]?>" type="text" name="time" value=""/></td>
                         <?endforeach?>
                         <?
                         if (count($mainT) < $workers[cols]/2){
@@ -75,7 +92,7 @@
                             //$it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
                             // if ($key == 1) $it = 2;
                             for ($i = count($mainT); $i < ($workers[cols]/2); $i++)
-                                echo "<td otdel='{$ids[id]}' rab='{$workers[id]}'></td><input type='text' name='123' value='' /><td><input class='time-input' type='text' name='time' value=''/></td>";
+                                echo "<td class='td' otdel='{$ids[id]}' rab='{$workers[id]}'></td><input type='text' name='work' value='' /><td><input class='time-input' type='text' name='time' value=''/></td>";
                         }
                         ?>
                     <?endforeach?>
@@ -86,4 +103,8 @@
     <?endif?>
     </tbody>
 </table>
-<?=get_day_of_week("2016-04-24")?>
+<div class="hidden">
+    <ul class="list-group enter">
+
+    </ul>
+</div>
