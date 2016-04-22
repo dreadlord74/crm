@@ -46,6 +46,11 @@ class worker extends abstract_class implements base {
         return $name[name];
     }
 
+    public function add_column($id){
+        $this->dep_ini()->change_cols_by_id($this->get_dep_id_by_id($id));
+        return $this->db->query("UPDATE workers SET cols=cols+2 WHERE id=$id")->affected();
+    }
+
     public function get_cols_by_id($id){
         $cols = $this->db->super_query("SELECT cols FROM workers WHERE id=".$id, false);
 
