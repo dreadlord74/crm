@@ -17,7 +17,7 @@ class workTable extends abstract_class
     }
 
     public function write_time($id, $time){
-        return $this->db->query("UPDATE work_table SET time='$time' WHERE id=$id")->affected();
+        return $this->db->query("UPDATE work_table SET time=$time WHERE id=$id")->affected();
     }
 
     public function add_date($last_date){
@@ -35,6 +35,11 @@ class workTable extends abstract_class
             }
             return $date_ids;
         }
+    }
+
+    public function add_work($date_id, $dep_id, $client_id, $worker_id, $time = "", $desc=""){
+        $time = ($time ? $time : 0);
+        return $this->db->query("INSERT INTO work_table (date_id, dep_id, client_id, worker_id, time, description) VALUES ('$date_id', '$dep_id', '$client_id', '$worker_id', '$time', '$desc')")->get_last_id();
     }
 
 
