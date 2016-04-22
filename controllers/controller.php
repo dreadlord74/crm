@@ -8,6 +8,13 @@ $view = ($_GET['view'] ? $_GET['view'] : "mainTable");
 
 $do = ($_GET['do'] ? $_GET['do'] : "nothing");
 
+$work_type = array(
+    1 => "Сайт",
+    2 => "СЕО",
+    3 => "Реклама",
+    4 => "Доработки"
+);
+
 switch ($view){
 
     case "dep":
@@ -36,8 +43,9 @@ switch ($view){
     case "mainTable":
         require_once "mainTable.php";
 
-
         break;
 }
+
+unset($do, $mysqli);
 
 require_once (VIEW."/index.php");
