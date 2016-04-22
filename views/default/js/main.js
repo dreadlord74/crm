@@ -1,4 +1,8 @@
 $(document).ready(function(e) {
+	
+	//скрывает нерабочие дни
+	$("tr[work_day=0]").css({display: "none"});
+	
 	var text, time;
 	
 	$(".td > textarea").hover(function(){
