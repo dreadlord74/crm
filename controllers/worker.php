@@ -33,6 +33,13 @@ switch ($do){
         exit();
         break;
 
+    case "add_column":
+
+        echo $worker->add_column($_POST[worker_id]);
+
+        exit();
+        break;
+
     default:
 
         $view = "worker/view";
