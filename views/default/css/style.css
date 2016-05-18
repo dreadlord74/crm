@@ -2,6 +2,30 @@
 	width: 10px;
 }
 
+body > thead{
+	position: fixed;
+	display: block;
+	-webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.3);
+	-moz-box-shadow:    0px 5px 5px 0px rgba(50, 50, 50, 0.3);
+	box-shadow:         0px 5px 5px 0px rgba(50, 50, 50, 0.3);
+}
+
+	body > thead tr{
+		display: block;
+		position: relative;
+		float: left;
+	}
+
+		body> thead tr th{
+			display: block;
+			position: relative;
+			float: left;
+		}
+
+		body > thead tr:last-child th{
+			background: #fff;
+		}
+
 thead th,
 tbody td {
 	border-left: 1px solid #dddddd;
@@ -41,10 +65,31 @@ input[type=color]{
 
 }
 
-.td{
+tr[today] td:not([not-blur]){
+	background: #ffdcab;
+}
+
+.td, .deadline{
 	position:relative;
 	cursor: pointer;
 }
+
+	.td:hover > img, .deadline:hover > img{
+		opacity: .9;
+	}
+
+	.td img, .deadline img {
+		opacity: 0;
+		transition: opacity .3s ease;
+		position: absolute;
+		top: -8px;
+		right: -8px;
+		cursor: pointer;
+	}
+
+	.td:hover .hidden-text{
+		display: block;
+	}
 
 	.hidden-text{
 		position: absolute;
@@ -56,7 +101,12 @@ input[type=color]{
 		border: 1px solid #e6e6e6;
 	}
 
-.td > input {
+		.hidden-text:focus{
+			display: block;
+		}
+
+.td > input, 
+.deadline > input {
 	/*width: 100% !important;
 	padding: 1px 3px !important;*/
 	background:  inherit;
@@ -67,7 +117,8 @@ input[type=color]{
 	text-indent: 0 !important;
 }
 
-.td > input[disabled]{
+.td > input[disabled],
+.deadline input[disabled]{
 	cursor: pointer;
 	border: none !important;
 }
@@ -106,7 +157,11 @@ table tr:last-child > td{
 	background: #00BFFF;
 	color: #fff;
 	cursor: pointer;
+}
+
+.show-list li {
 	list-style: none;
+	padding: 3px 5px;
 }
 
 .th{
@@ -126,3 +181,40 @@ table tr:last-child > td{
 		cursor: pointer;
 	}
 
+#fade{
+	display: none;
+	/*background: rgba(0, 0, 0, .6);*/
+	z-index: 9999;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.grab{
+	display: block !important;
+	cursor: -webkit-grab;
+}
+
+.grabbing{
+	display: block !important;
+	cursor: -webkit-grabbing;
+}
+
+.left-block{
+	position: fixed;
+	top: 51px;
+	left: 0;
+	background: #fff;
+	z-index: 2;
+	width:181px;
+}
+	/*.left-block tr{
+		display: block;
+	}
+		.left-block td{
+			display: inline-block;
+		}
+		
+			.left-block td:not(:first-child){
+				margin-left: -3px;
+			}
