@@ -39,8 +39,30 @@ class workTable extends abstract_class
 
     public function add_work($date_id, $dep_id, $client_id, $worker_id, $time = "", $desc=""){
         $time = ($time ? $time : 0);
-        return $this->db->query("INSERT INTO work_table (date_id, dep_id, client_id, worker_id, time, description) VALUES ('$date_id', '$dep_id', '$client_id', '$worker_id', '$time', '$desc')")->get_last_id();
+		
+		$id = $this->db->query("INSERT INTO work_table (date_id, dep_id, client_id, worker_id, time, description) VALUES ('$date_id', '$dep_id', '$client_id', '$worker_id', '$time', '$desc')")->get_last_id();
+        $result = $this->db->super_query("SELECT work_table.id as wid, clients.text_color, clients.color, clients.contract_number, clients.way, clients.work_type, clients.name, clients.id as cid
+										FROM work_table
+											RIGHT JOIN clients ON work_table.client_id = clients.id
+												WHERE work_table.id=$id");
+		foreach ($result as $key => $value)
+			$result[$key][work_type] = work_type($value[work_type]);
+		
+		return $result;
     }
 
+    public function write_work($id, $client_id){
+        return $this->db->query("UPDATE work_table SET client_id='$client_id' WHERE id=$id")->affected();
+    }
 
+    public function change_text($id, $date_id, $dep_id, $worker_id, $text){
+        if ($id != "undefined")
+            return $this->db->query("UPDATE work_table SET text='$text' WHERE id=$id")->affected();
+        else
+            return $this->db->query("INSERT INTO work_table (date_id, dep_id, client_id, worker_id, text) VALUES ('$date_id', '$dep_id', -1, '$worker_id', '$text')")->get_last_id();
+    }
+
+    public function delete($id){
+        return $this->db->query("DELETE FROM work_table WHERE id=$id")->affected();
+    }
 }
