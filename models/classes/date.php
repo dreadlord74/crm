@@ -24,4 +24,45 @@ class date extends abstract_class
              return $this->db->super_query("SELECT * FROM dates WHERE id IN (" . implode(", ", $ids) . ")");
          }
     }
+
+    public function limit_get($offset, $limit = 100){
+        return $this->db->super_query("SELECT * FROM dates LIMIT $offset,$limit");
+    }
+	
+	public function get_deadline_by_date_id(&$id){
+		$result = $this->db->super_query("SELECT id, client_id FROM deadlines WHERE date_id=$id", false);
+		//echo $result[client_id];
+		
+		
+		
+		if (count($result) > 0){
+			global $client;
+			
+			$client->set_vars($result[client_id], $result[id]);
+			
+			return $client;
+		}else
+			return false;
+	}
+	
+	public function add_deadline(&$client_id, &$date_id){
+		$id = $this->db->query("INSERT INTO deadlines (client_id, date_id) VALUES ('$client_id', '$date_id')")->get_last_id();
+		
+		global $client;
+		
+		$client->set_vars($client_id);
+		
+		return array(
+			"cid" => $client->id,
+			"did" => $id,
+			"name" => $client->name,
+			"color" => $client->color,
+			"text_color" => $client->text_color,
+			"way" => $client->way
+		);
+	}
+	
+	public function delete_deadline(&$id){
+		return $this->db->query("DELETE FROM deadlines WHERE id=$id")->affected();
+	}
 }
