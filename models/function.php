@@ -49,3 +49,14 @@ function get_month($date){
 
     return $months[date("n", mktime(0, 0, 0, $date[1], $date[2], $date[0]))];
 }
+
+function work_type(&$id){
+	$work_type = array(
+		1 => "Сайт",
+		2 => "СЕО",
+		3 => "Реклама",
+		4 => "Доработки"
+	);
+	
+	return $work_type[$id];
+}
