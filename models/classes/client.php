@@ -8,6 +8,30 @@
  */
 class client extends abstract_class implements base
 {
+	public $id;
+	public $work_type;
+	public $name;
+	public $way;
+	public $text_color;
+	public $date;
+	public $color;
+	public $contract_number;
+	public $deadline_id = NULL;
+	
+	public function set_vars(&$id, $deadline_id = NULL){
+		$this->id = $id;
+		$this->name = $this->get_name_by_id($id);
+		$this->color = $this->get_color_by_id($id);
+		$this->contract_number = $this->get_contract_number_by_id($id);
+		$this->date = $this->get_date_by_id($id);
+		$this->text_color = $this->get_text_color_by_id($id);
+		$this->work_type = work_type($this->get_work_type_by_id($id));
+		$this->way = $this->get_way_by_id($id);
+		
+		if ($deadline_id)
+			$this->deadline_id = $deadline_id;		
+	}
+
     public function get_priority_by_id($id)
     {
         // TODO: Implement get_priority_by_id() method.
@@ -25,11 +49,16 @@ class client extends abstract_class implements base
 
     public function get_all()
     {
-        return $this->db->super_query("SELECT * FROM clients ORDER BY priority");
+        return $this->db->super_query("SELECT * FROM clients WHERE id !=-1 ORDER BY priority");
     }
 
     public function search($search){
-        return $this->db->super_query("SELECT * FROM clients WHERE name LIKE '%$search%' OR clients.name LIKE '$search%' OR clients.name LIKE '%$search'");
+        $result = $this->db->super_query("SELECT * FROM clients WHERE (name LIKE '%$search%' OR clients.name LIKE '$search%' OR clients.name LIKE '%$search') AND id != -1");
+		
+		foreach ($result as $key => $value)
+			$result[$key][work_type] = work_type($value[work_type]);
+		
+		return $result;
     }
 
     public function get_color_by_id($id){
@@ -47,6 +76,11 @@ class client extends abstract_class implements base
     private function change_priority($id, $priority){
 
     }
+	
+	private function get_date_by_id(&$id){
+		$date = $this->db->super_query("SELECT date FROM clients WHERE id=$id", false);
+		return $date[date];
+	}
 
     public function get_way_by_id($id){
         $way = $this->db->super_query("SELECT way FROM clients WHERE id=$id", false);
@@ -57,7 +91,7 @@ class client extends abstract_class implements base
     public function get_work_type_by_id($id){
         $work_type = $this->db->super_query("SELECT work_type FROM clients WHERE id=$id", false);
 
-        return $work_type[work_type];
+        return work_type($work_type[work_type]);
     }
 
     public function get_contract_number_by_id($id){
