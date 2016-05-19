@@ -1,7 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sp
- * Date: 18.05.2016
- * Time: 16:40
- */
+
+defined("SCRIPT") or die;
+
+switch ($do){
+
+
+    default:
+        $view = "summary/view";
+
+        break;
+}
