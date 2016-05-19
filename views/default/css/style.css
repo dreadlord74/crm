@@ -200,21 +200,77 @@ table tr:last-child > td{
 	cursor: -webkit-grabbing;
 }
 
-.left-block{
-	position: fixed;
-	top: 51px;
-	left: 0;
+.content{
 	background: #fff;
-	z-index: 2;
-	width:181px;
+	width: 100%;
+	position: relative;
+	float: left;
+	font: 11px Arial;
 }
-	/*.left-block tr{
-		display: block;
+
+	.content div:not([class=head]):not([class=body]) {
+		border: 1px solid #000;
+		position: relative;
+		float: left;
+		padding: 10px 0;
 	}
-		.left-block td{
-			display: inline-block;
+
+	.client{
+		padding: 15px 0;
+		text-align: center;
+		box-sizing: border-box;
+		width:200px;
+		margin-right: 3px;
+	}
+
+		.content .head > div{
+			box-sizing: border-box;
+			height: 49px;
+			text-align: center;
+			line-height: 15px;
+			font-weight: bold;
 		}
-		
-			.left-block td:not(:first-child){
-				margin-left: -3px;
+
+.content div:not(:last-child):not(:first-child){
+	border-right: none !important;
+}
+
+		.content .saled{
+			width: 80px;
+		}
+
+		.content .ostatok{
+			width: 80px;
+		}
+
+		.content .rol{
+			width: 180px;
+			line-height: 25px !important;
+		}
+
+		.content .plan{
+			width: 40px;
+		}
+
+		.content .date{
+			width: 110px;
+			line-height: 25px !important;
+		}
+
+		.content .prognoz{
+			width: 55px;
+		}
+
+		.content .ost{
+			width: 50px;
+		}
+
+		.content .month{
+			width: 60px;
+		}
+
+			.content .head .month{
+				background: #f0ad4e;
+				line-height: 25px;
 			}
+
