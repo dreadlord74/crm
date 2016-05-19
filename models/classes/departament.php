@@ -48,13 +48,11 @@ class departament extends abstract_class implements base{
                );
     }
 
-    public function write($id, $name, $priority = ""){
+    public function write($id, $name, $color, $text_color, $priority = ""){
         if ($priority != $this->get_priority_by_id($id))
             $this->change_priority($id, $priority);
 
-        $result = $this->db->query("UPDATE departaments SET name='".$name."', priority=".$priority." WHERE id=".$id)->affected();
-
-
+        $result = $this->db->query("UPDATE departaments SET name='".$name."', priority=".$priority.", color='$color', text_color='$text_color' WHERE id=".$id)->affected();
 
         if ($result)
             return 1;

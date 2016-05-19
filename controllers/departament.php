@@ -20,7 +20,7 @@ switch ($do){
 
     case "write":
 
-        echo $dep->write($_POST[id], $_POST[name], $_POST[prior]);
+        echo $dep->write($_POST[id], $_POST[name], $_POST[color], $_POST[text_color], $_POST[prior]);
 
         exit();
         break;
