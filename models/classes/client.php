@@ -32,6 +32,16 @@ class client extends abstract_class implements base
 			$this->deadline_id = $deadline_id;		
 	}
 
+    public function get_ids()
+    {
+        return $this->db->super_query("SELECT id FROM clients");
+    }
+
+    public function get_by_id(&$id)
+    {
+        return $this->db->super_query("SELECT * FROM clients WHERE id=$id", false);
+    }
+
     public function get_priority_by_id($id)
     {
         // TODO: Implement get_priority_by_id() method.
