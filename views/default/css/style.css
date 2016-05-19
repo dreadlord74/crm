@@ -207,6 +207,7 @@ table tr:last-child > td{
 	position: relative;
 	float: left;
 	font:bold 11px Arial;
+	padding-left: 455px;
 }
 
 	.content table{
@@ -320,6 +321,13 @@ table tr:last-child > td{
 		border-bottom: none;
 	}
 
+	.content .clients{
+		position: fixed;
+		left: 0;
+		top: 1px;
+		background: #fff;
+		z-index: 1;
+	}
 
 		.content .clients tbody .client{
 			height: 80px;
@@ -387,4 +395,9 @@ table tr:last-child > td{
 		color: inherit;
 		background: inherit;
 		border: none !important;
+	}
+
+	.clients tbody tr:not([data-id]) > td{
+		height: 6%;
+		box-sizing: border-box;
 	}
