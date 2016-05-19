@@ -40,6 +40,13 @@ switch ($view){
 
         break;
 
+    case "summary":
+        $title = "Сводная";
+
+        require_once "summary.php";
+
+        break;
+
     case "mainTable":
         require_once "mainTable.php";
 
