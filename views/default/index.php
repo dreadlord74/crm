@@ -22,6 +22,7 @@
     <div class="col-md-12">
         <ul class="list-inline">
             <li><a href="/">Основная таблица</a> </li>
+            <li><a href="/?view=summary">Сводная таблица</a> </li>
             <li><a href="/?view=dep">Отделы</a> </li>
             <li><a href="/?view=worker">Работники</a> </li>
             <li><a href="/?view=client">Клиенты</a> </li>
