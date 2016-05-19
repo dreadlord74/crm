@@ -26,8 +26,8 @@ body > thead{
 			background: #fff;
 		}
 
-thead th,
-tbody td {
+table:not([class=workers]):not([class=clients]):not([class=months]) thead th,
+table:not([class=workers]):not([class=clients]):not([class=months]) tbody td {
 	border-left: 1px solid #dddddd;
 	text-align:center
 }
@@ -202,11 +202,32 @@ table tr:last-child > td{
 
 .content{
 	background: #fff;
-	width: 100%;
+	max-width: 300%;
+	min-width: 200%;
 	position: relative;
 	float: left;
-	font: 11px Arial;
+	font:bold 11px Arial;
 }
+
+	.content table{
+		display: inline-table;
+	}
+
+		.content .workers th:first-child{
+			padding: 9px 0;
+		}
+
+		.content .months{
+			position: absolute;
+		}
+
+			.content .months th{
+				background-color: #ffc599;
+			}
+
+				.content .months th:first-child{
+					padding: 15px 0 16px 0;
+				}
 
 	.content div:not([class=head]):not([class=body]) {
 		border: 1px solid #000;
@@ -221,6 +242,14 @@ table tr:last-child > td{
 		box-sizing: border-box;
 		width:200px;
 		margin-right: 3px;
+	}
+
+	.content .head{
+		position: fixed;
+		top: 0;
+		left:0;
+		max-width: 300%;
+		min-width: 200%;
 	}
 
 		.content .head > div{
@@ -274,3 +303,88 @@ table tr:last-child > td{
 				line-height: 25px;
 			}
 
+	.content .left-clients{
+		position: fixed !important;
+		left:0;
+		top: 50px;
+		box-sizing: border-box;
+		width: 200px;
+		border: none !important;
+	}
+
+	.content .workers th,	.content .workers td,
+	.content .clients th,	.content .clients td,
+	.content .months th,	.content .months td{
+		border: 1px solid #dddddd;
+		text-align: center;
+		border-bottom: none;
+	}
+
+
+		.content .clients tbody .client{
+			height: 80px;
+			display: table-cell;
+			vertical-align: middle;
+			float: none !important;
+		}
+
+		.clients tbody tr[data-id]+tr > td:first-child,
+		.clients tbody tr[data-id]+tr+tr+tr+tr > td:first-child,
+		.workers tbody tr > td:nth-child(2),
+		.workers tbody tr > td:nth-child(4){
+			background: #ffc599;
+			color: #0d87e9;
+		}
+
+		.clients tbody tr[data-id]+tr+tr+tr+tr > td:last-child{
+			color: #0d87e9;
+			background: #e1bee7;
+			border-right: 1px solid red;
+		}
+
+		.clients tbody tr[data-id]+tr+tr+tr > td{
+			border-top: 1px solid red;
+		}
+
+		.clients tbody tr[data-id]+tr+tr+tr > td:last-child{
+			border-right: 1px solid red;
+		}
+
+		.clients tbody tr[data-id] td,
+		.clients tbody tr[data-id]+tr+tr+tr+tr td,
+		.workers tbody tr[last] > td,
+		.months tbody tr[last] > td{
+			border-bottom: 1px solid #000 !important;
+		}
+
+		.workers tbody tr > td:first-child{
+			padding: 4px 0;
+		}
+
+		.workers tbody .lost{
+			background:  red !important;
+			color: #fff !important;
+		}
+
+		.workers tbody tr td:nth-child(3):not([class=lost]){
+			color: blue;
+		}
+
+		.workers tbody tr td[have-more]{
+			background: #b2dba1;
+		}
+
+		.workers tbody tr[last] > td:nth-child(3){
+			color: red;
+		}
+
+		.months input{
+			text-align: center;
+			text-indent: -5px;
+		}
+
+	.content table tbody td input{
+		color: inherit;
+		background: inherit;
+		border: none !important;
+	}
