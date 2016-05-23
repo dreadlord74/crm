@@ -34,4 +34,11 @@ class summary extends abstract_class
     {
         return $this->db->query("UPDATE summary SET hours=$hours WHERE id=$id")->affected();
     }
+
+    public function get_info_by_id(&$id)
+    {
+        return $this->db->super_query("SELECT * FROM summary_info WHERE summary_id=$id");
+    }
+
+
 }
