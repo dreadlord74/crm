@@ -1,4 +1,7 @@
 $(document).ready(function(e) {
+	
+	$("body:not(:animated)").animate({scrollTop: $("#today").offset().top-1200}, 10);
+	
 	var headerW = $('thead').width(), headerH = $('thead').height(), thsW = [], thsH = [];
 	
 	$('thead tr').each(function(index, element) {
@@ -24,7 +27,7 @@ $(document).ready(function(e) {
 	$('body > thead').css({display: "block", position: "fixed", width: headerW, height: headerH, "z-index": 5});
 	
 	//скрывает нерабочие дни
-	$("tr[work_day=0]").css({display: "none"});
+	//$("tr[work_day=0]").css({display: "none"});
 	
 	//скролл шапки
 	$(window).on("scroll", function(){
@@ -273,7 +276,7 @@ $(document).ready(function(e) {
 	$(".table").on("click", ".click", function(){
 		$(this).children("input").prop("disabled", false);
 		
-		$(".hidden").css({top: ($(this).offset().top+$(this).height()+4)+"px", left: ($(this).offset().left-$(window).scrollLeft())+"px"});
+		$(".hidden").css({top: mY+"px", left: mX+"px"});
 		$(".enter").html("");
 	});
 	
@@ -286,7 +289,7 @@ $(document).ready(function(e) {
 		
 		$(".hidden").addClass("show-list");
 		
-		if ($(".hidden").offset().left+$(".hidden").height() > $(".table").height()){
+		if ($(".hidden").offset().left+$(".hidden").width() > $(".table").width()){
 			$(".hiddent").css({left: (($(".table").height() - $(".hidden").offset().left) + $(".hidden").offset().left)+"px"});
 		}
 		
