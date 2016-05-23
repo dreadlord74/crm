@@ -19,6 +19,11 @@ class departament extends abstract_class implements base{
         return $name[name];
     }
 
+    public function get_by_id(&$id)
+    {
+        return $this->db->super_query("SELECT * FROM departaments WHERE id=$id", false);
+    }
+
     public function get_all(){
 
         return $this->db->super_query("SELECT * FROM departaments ORDER BY priority");
