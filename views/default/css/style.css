@@ -10,6 +10,11 @@ body > thead{
 	box-shadow:         0px 5px 5px 0px rgba(50, 50, 50, 0.3);
 }
 
+body > thead th{
+	border-left: 1px solid #dddddd;
+	text-align:center
+}
+
 	body > thead tr{
 		display: block;
 		position: relative;
@@ -329,6 +334,10 @@ table tr:last-child > td{
 		z-index: 1;
 	}
 
+		.content .clients input{
+			text-indent: 10px;
+		}
+
 		.content .clients tbody .client{
 			height: 80px;
 			display: table-cell;
@@ -343,6 +352,10 @@ table tr:last-child > td{
 			background: #ffc599;
 			color: #0d87e9;
 		}
+
+.clients tbody tr[data-id] > td:first-child{
+	height: 100px;
+}
 
 		.clients tbody tr[data-id]+tr+tr+tr+tr > td:last-child{
 			color: #0d87e9;
@@ -395,9 +408,31 @@ table tr:last-child > td{
 		color: inherit;
 		background: inherit;
 		border: none !important;
+		text-align: center;
+	}
+
+	.content .workers tbody td input{
+		max-width: 35px;
 	}
 
 	.clients tbody tr:not([data-id]) > td{
 		height: 6%;
 		box-sizing: border-box;
+	}
+
+.content .workers tbody tr[last] > td:first-child{
+	position: relative;
+}
+
+.content .workers tbody tr[last] > td:first-child:hover > img{
+	opacity: 1;
+}
+
+	.content .workers tbody tr[last] > td:first-child img{
+		position: absolute;
+		opacity: 0;
+		transition: all .3s ease;
+		top: 2px;
+		right: 5px;
+		cursor: pointer;
 	}
