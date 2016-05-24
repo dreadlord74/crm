@@ -120,6 +120,7 @@ class client extends abstract_class implements base
         $id = $this->db->query("INSERT INTO clients (name, `date`, way, work_type, contract_number, color, text_color) VALUES ('$name', '$date', '$way', '$work_type', '$contract_number', '$color', '$text_color')");
 
         if ($id){
+            $this->db->query("INSERT INTO summary (client_id) VALUES ({$this->db->get_last_id()})");
             return 1;
         }else{
             return 0;

@@ -7,6 +7,8 @@ $client = new client();
 switch ($do){
     case "add":
         if ($_POST[submit]){
+            $summary = new summary();
+
             $client->add($_POST[name], $_POST[way], $_POST[work_type], $_POST[color], $_POST[text_color], $_POST[date], $_POST[contract_number]);
             unset($_POST[submit]);
         }
