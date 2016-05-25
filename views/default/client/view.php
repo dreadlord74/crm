@@ -95,7 +95,7 @@
                         </select>
                         <input style="background: <?=$value[color]?>; color: <?=$value[text_color]?>" type="text" name="contract_number" value="<?=$value[contract_number]?>" />
 
-                        <input style="width: 350px; background: <?=$value[color]?>; color: <?=$value[text_color]?>; display: inline-block" type="text" name="all" value="<?=$value[name]." (".$value[way].") ".$work_type[$value[work_type]]." - ".$value[contract_number]?>" disabled />
+                        <input style="width: 350px; background: <?=$value[color]?>; color: <?=$value[text_color]?>; display: inline-block" type="text" name="all" value="<?=$value[name]." (".$work_type[$value[work_type]].") ".$value[way]." - ".$value[contract_number]?>" disabled />
                         <input title="Цвет фона" type="color" id="bg-color" name="color" value="<?=$value[color]?>" />
                         <input title="Цвет текста" type="color" id="t-color" name="text_color" value="<?=$value[text_color]?>" />
                         <img action="write" class="img-thumbnail control" src="<?=VIEW?>/img/tool.png" />
