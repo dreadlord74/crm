@@ -5,13 +5,12 @@
 
             $("#modal-q").modal("show");
             var data = "worker_id="+$(this).parent(".th").attr("rab");
-            $("#modal .btn-primary").click(function(){
+            $("#modal-q .btn-primary").click(function(){
                 $.ajax({
                     url: "./?view=worker&do=add_column",
                     type: "POST",
                     data: data,
                     success: function (data){
-                        alert(data);
                         document.location.href = "<?=PATH.$_SERVER[REQUEST_URI]?>";
                     }
                 });
@@ -44,9 +43,9 @@
     </tr>
     </thead>
     <tbody>
-    <?foreach ($date->limit_get(0) as $d_key => $item):?>
+    <?foreach ($date->first_get() as $d_key => $item):?>
         <?$day = get_day_of_week($item[date])?>
-        <tr <?=(date("Y-m-d") == $item[date] ? "today='1'" : "")?> day-key="<?=$d_key?>" work_day="<?=$item[is_work_day]?>" date-id="<?=$item[id]?>" <?=($day == "пн" ? "class='pn'": "")?>>
+        <tr <?=(date("Y-m-d") == $item[date] ? "today='1' id='today'" : "")?> day-key="<?=$d_key?>" work_day="<?=$item[is_work_day]?>" <?=(!$item[is_work_day] ? "style='display: none;'" : "")?> date-id="<?=$item[id]?>" <?=($day == "пн" ? "class='pn'": "")?>>
             <td><?=get_month($item[date])?></td>
             <td><?=change_date_view($item[date])?></td>
             <td><?=$day?></td>
@@ -89,38 +88,6 @@
            
         </tr>
     <?endforeach?>
-    <?if (FUTURE_DATES - (strtotime((date("d-m-Y")) - strtotime($last_date))/60/60/24) < FUTURE_DATES):?>
-        <?foreach ($date->get_by_ids($main->add_date($item[date])) as $item):?>
-            <?$day = get_day_of_week($item[date])?>
-            <tr work_day="<?=$item[is_work_day]?>" date-id="<?=$item[id]?>" <?=($day == "пн" ? "style='border-top:1px solid #000;": "")?>>
-                <td><?=get_month($item[date])?></td>
-                <td><?=change_date_view($item[date])?></td>
-                <td><?=$day?></td>
-                <?foreach($dep->get_all() as $ids):?>
-                    <?foreach($worker->get_by_dep_id($ids[id]) as $key => $workers):?>
-                        <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
-                        <?foreach ($mainT as $work):?>
-                            <td work-id="<?=$work[id]?>" class="td click" style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>" otdel='<?=$ids[id]?>' rab='<?=$workers[id]?>' work=''>
-                                <input style="color: <?=$client->get_text_color_by_id($work[client_id])?>" type="text" name="work" value='' />
-                                <textarea class="hidden-text" name="description"><?=$work[description]?></textarea>
-                            </td>
-                            <td style="background: <?=$client->get_color_by_id($work[client_id])?>; color: <?=$client->get_text_color_by_id($work[client_id])?>"><input class="time-input" work-id="<?=$work[id]?>" type="text" name="time" value=""/></td>
-                        <?endforeach?>
-                        <?
-                        if (count($mainT) < $workers[cols]/2){
-                            //вроде работает
-                            //$it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
-                            // if ($key == 1) $it = 2;
-                            for ($i = count($mainT); $i < ($workers[cols]/2); $i++)
-                                echo "<td class='td click' otdel='{$ids[id]}' rab='{$workers[id]}'></td><input type='text' name='work' value='' /><td><input class='time-input' type='text' name='time' value=''/></td>";
-                        }
-                        ?>
-                    <?endforeach?>
-                    <td><?=$day?></td>
-                <?endforeach?>
-            </tr>
-        <?endforeach?>
-    <?endif?>
     </tbody>
 </table>
 <div class="hidden">

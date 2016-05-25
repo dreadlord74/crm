@@ -1,6 +1,6 @@
 $(document).ready(function(e) {
 	
-	$("body:not(:animated)").animate({scrollTop: $("#today").offset().top-1200}, 10);
+	$("body:not(:animated)").animate({scrollTop: $("#today").offset().top-300}, 10);
 	
 	var headerW = $('thead').width(), headerH = $('thead').height(), thsW = [], thsH = [];
 	
@@ -31,7 +31,28 @@ $(document).ready(function(e) {
 	
 	//скролл шапки
 	$(window).on("scroll", function(){
-		$("body > thead").css({left: "-"+$(this).scrollLeft()+"px"});
+		$("body > thead").css({left: "-"+$(this).scrollLeft()+"px"});		
+		
+		/*if ($(".table").height() - ($(this).scrollTop()+$(window).height()) <= 200){
+			var last = $(".table tbody tr:last-child").attr("date-id"), count = $(".table tbody tr:last-child td").length, day_key = $(".table tbody tr:last-child").attr("day-key");
+			
+			$.ajax({
+				url: "./?do=get_next_dates",
+				type: "POST",
+				data: "last_date="+last,
+				success: function(data){
+					var dat = $.parseJSON(data);
+					console.log($.parseJSON(data));
+					
+					$.each(dat, function(i, el){
+						$(".table").append("<tr day-key='"+day_key+1+i+"' data-id='"+el.id+"' work_day='"+el.is_work_day+"'></tr>");
+					});
+				},
+				error: function(){
+					alert("?? ??????? ???????? ????????? ?????? ???????");
+				}
+			});
+		}*/
 	});
 	
 	var lol = true, mX = 0, mY = 0, cX = 0, cY = 0, lo = false;
@@ -68,8 +89,7 @@ $(document).ready(function(e) {
 					console.log("move");
 					$(window).scrollTop($(window).scrollTop()+(cY - mY));
 				}
-
-		});
+	});
 				
 	$("#fade").on("mouseup", function(){
 		$(this).removeClass("grabbing").addClass("grab");
@@ -85,19 +105,19 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	$('input').on('focusin', function(){
+	$('.table').on('focusin', "input", function(){
 		lol = false;
 	});
 	
-	$('input').on('focusout', function(){
+	$('.table').on('focusout', "input", function(){
 		lol = true;
 	});
 	
-	$('textarea').on('focusin', function(){
+	$('.table').on('focusin', 'textarea', function(){
 		lol = false;
 	});
 	
-	$('textarea').on('focusout', function(){
+	$('.table').on('focusout', 'textarea', function(){
 		lol = true;
 	});
 	
@@ -215,13 +235,13 @@ $(document).ready(function(e) {
 					if (data == 1){
 						obj.removeAttr("style").removeAttr("work-id").removeAttr("work");
 						
-						obj.children("input").removeAttr("value");
+						obj.children("input").val("").removeAttr("style");
 						
 						obj.children("img").remove();
 						
 						obj.children("textarea").remove();
 						
-						obj.next("td").removeAttr("style").children("input").removeAttr("value");
+						obj.next("td").removeAttr("style").children("input").val("").removeAttr("style");
 						
 						$("#modal-q2").modal("hide");
 					}
@@ -254,29 +274,29 @@ $(document).ready(function(e) {
 	
 	var focusInput;
 	
-	$(".td").next("td > input").children("input").on("focusin", function(){
+	/*$(".td").next("td > input").children("input").on("focusin", function(){
 		time = $(this).val();
-	});
+	});*/
 	
-	$(".td").next("td").children("input").on("focusout", function(){
-		if (time != $(this).val()){
-			var data = "time="+$(this).val()+"&id="+$(this).attr("work-id");
+	$(".table").on("change", ".time-input", function(){
+		console.log(123);
+			var data = "time="+$(this).val()+"&id="+$(this).parent("td").prev(".td").attr("work-id");
 			$.ajax({
 					url: "./?view=mainTable&do=write_time",
 					type: "POST",
 					data: data,
 					success: function(data){
+						console.log(data);
 						if (data == 0)
 							alert("Не удалось изменить время.");
 					}
 				});
-		}
 	});
 	
 	$(".table").on("click", ".click", function(){
 		$(this).children("input").prop("disabled", false);
 		
-		$(".hidden").css({top: mY+"px", left: mX+"px"});
+		$(".hidden").css({top: $(this).offset().top - $(window).scrollTop() + 20+"px", left: $(this).offset().left - $(window).scrollLeft()+"px"});
 		$(".enter").html("");
 	});
 	
@@ -290,7 +310,7 @@ $(document).ready(function(e) {
 		$(".hidden").addClass("show-list");
 		
 		if ($(".hidden").offset().left+$(".hidden").width() > $(".table").width()){
-			$(".hiddent").css({left: (($(".table").height() - $(".hidden").offset().left) + $(".hidden").offset().left)+"px"});
+			//$(".hidden").css({left: (($(".table").height() - $(".hidden").offset().left) + $(".hidden").offset().left)+"px"});
 		}
 		
 		$.ajax({
@@ -383,7 +403,7 @@ $(document).ready(function(e) {
 							data = $.parseJSON(data);
 							
 							$.each(data, function(i, e){
-								td.attr("work-id", e.wid).attr("work", e.cid).css({background: e.color, color: e.text_color}).next("td").children("input").attr("placeholder", 0).attr("open", 1);
+								td.attr("work-id", e.wid).append("<img src='views/default/img/delete-button.png' />").append('<textarea class="hidden-text" name="description" delay="0"></textarea>').attr("work", e.cid).css({background: e.color, color: e.text_color}).next("td").css({background: e.color, color: e.text_color}).children("input").css({background: e.color, color: e.text_color}).attr("placeholder", 0).prop("disabled", false).attr("open", 1);
 								inp.css({background: e.color, color: e.text_color}).val(e.name+" ("+e.way+") "+e.work_type+" - "+e.contract_number);
 							});
 							
