@@ -117,6 +117,11 @@ class worker extends abstract_class implements base {
 
     public function delete($id)
     {
+        global $summary; global $main;
+
+        $summary->delete_info_by_worker_id($id);
+        $main->delete_by_worker_id($id);
+
         $this->cols = $this->get_cols_by_id($id);
         $this->dep_id = $this->get_dep_id_by_id($id);
 
