@@ -24,6 +24,18 @@ switch ($do){
         exit();
         break;
 
+    case "write_plan_h":
+        echo $summary->write_plan_h($_POST[sum_id], $_POST[worker_id], $_POST[value]);
+
+        exit();
+        break;
+
+    case "write_days":
+        echo $summary->write_days($_POST[sum_id], $_POST[worker_id], $_POST[date], $_POST[value], $_POST[offset]);
+
+        exit();
+        break;
+
     default:
         $client = new client();
         $date = new date();
