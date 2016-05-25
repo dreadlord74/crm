@@ -65,4 +65,9 @@ class workTable extends abstract_class
     public function delete($id){
         return $this->db->query("DELETE FROM work_table WHERE id=$id")->affected();
     }
+
+    public function delete_by_worker_id(&$id)
+    {
+        return $this->db->query("DELETE FROM work_table WHERE worker_id=$id")->affected();
+    }
 }
