@@ -21,6 +21,10 @@ switch ($do){
 
     case "del":
 
+        $summary = new summary();
+
+        $main = new workTable();
+
         echo $worker->delete($_POST[id]);
 
         exit();
