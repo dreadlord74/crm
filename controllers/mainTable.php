@@ -14,6 +14,13 @@ $main = new workTable();
 
 switch ($do){
 
+    case "get_next_dates":
+
+        echo $date->get_next_dates($_POST[last_date]);
+
+        exit();
+        break;
+
     case "write_desc":
 
         echo $main->write_desc($_POST[id], $_POST[description]);
