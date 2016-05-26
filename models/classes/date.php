@@ -30,14 +30,16 @@ class date extends abstract_class
     }
 
 	public function first_get(){
-		return $this->db->super_query("SELECT * FROM dates WHERE date > DATE_SUB(CURDATE(), INTERVAL 3 MONTH) AND date < DATE_ADD(CURDATE(), INTERVAL 4 MONTH)");
+		return $this->db->super_query("SELECT * FROM dates WHERE date > DATE_SUB(CURDATE(), INTERVAL ".LAST_MONTHS." MONTH) AND date < DATE_ADD(CURDATE(), INTERVAL ".NEXT_MONTHS." MONTH)");
+	}
+
+	public function get_next_dates(&$last_id)
+	{
+		return json_encode($this->db->super_query("SELECT * FROM dates WHERE id > $last_id LIMIT 100"));
 	}
 	
 	public function get_deadline_by_date_id(&$id){
 		$result = $this->db->super_query("SELECT id, client_id FROM deadlines WHERE date_id=$id", false);
-		//echo $result[client_id];
-		
-		
 		
 		if (count($result) > 0){
 			global $client;
