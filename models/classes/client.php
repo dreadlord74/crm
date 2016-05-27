@@ -59,7 +59,7 @@ class client extends abstract_class implements base
 
     public function get_all()
     {
-        return $this->db->super_query("SELECT * FROM clients WHERE id !=-1 ORDER BY priority");
+        return $this->db->super_query("SELECT * FROM clients WHERE id !=-1 AND is_archive!='1' ORDER BY priority");
     }
 
     public function search($search){
@@ -125,6 +125,22 @@ class client extends abstract_class implements base
         }else{
             return 0;
         }
+    }
+
+    public function get_archive()
+    {
+        return $this->db->super_query("SELECT * FROM clients WHERE is_archive='1'");
+    }
+
+    public function go_to_archive(&$id)
+    {
+        $res = $this->db->query("UPDATE summary SET is_archive='1' WHERE client_id=$id")->affected();
+        return ($res ? $this->db->query("UPDATE clietns SET is_archive='1' WHERE id=$id")->affected() : 0);
+    }
+
+    public function go_from_archive(&$id){
+        $res = $this->db->query("UPDATE summary SET is_archive='0' WHERE client_id=$id")->affected();
+        return ($res ? $this->db->query("UPDATE clietns SET is_archive='0' WHERE id=$id")->affected() : 0);
     }
 
     public  function delete($id)
