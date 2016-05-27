@@ -70,9 +70,6 @@
                     <?endforeach?>
                     <?
                         if (count($mainT) < $workers[cols]/2){
-                            //вроде работает
-                            //$it = (count($mainT) ? count($mainT) : ($key == 0 ? 0 : -4));
-                           // if ($key == 1) $it = 2;
                             for ($i = count($mainT); $i < ($workers[cols]/2); $i++)
                                 echo "<td not-blur=\"1\" class='td click' otdel='{$ids[id]}' rab='{$workers[id]}'> <input type='text' name='work'  value='' /></td><td not-blur=\"1\"><input disabled='disabled' class='time-input' type='text' name='time' value=''/></td>";
                         }
