@@ -26,9 +26,6 @@ $(document).ready(function(e) {
 	
 	$('body > thead').css({display: "block", position: "fixed", width: headerW, height: headerH, "z-index": 5});
 	
-	//скрывает нерабочие дни
-	//$("tr[work_day=0]").css({display: "none"});
-	
 	//скролл шапки
 	$(window).on("scroll", function(){
 		$("body > thead").css({left: "-"+$(this).scrollLeft()+"px"});		
@@ -250,6 +247,46 @@ $(document).ready(function(e) {
 			
 			$("#modal-q2 .btn-primary").off("click");
 			
+		});
+	});
+	
+	$(".table").on("click", "img[work]", function(){
+		var tr = $(this).parent("td").parent("tr").next("tr");
+		var data = "id="+tr.attr("date-id")+"&value=1";
+		console.log(data);
+		$.ajax({
+			url: "./?do=change_work_day",
+			type: "POST",
+			data: data,
+			success: function(data){
+				console.log(data);
+				if (data == 1){
+					tr.css({display: "table-row"});
+				}
+			},
+			error: function(){
+				alert("?? ??????? ??????? ????????? ???? ???????");
+			}
+		});
+	});
+	
+	$(".table").on("click", "img[not-work]", function(){
+		var tr = $(this).parent("td").parent("tr");
+		var data = "id="+tr.attr("date-id")+"&value=0";
+		console.log(data);
+		$.ajax({
+			url: "./?do=change_work_day",
+			type: "POST",
+			data: data,
+			success: function(data){
+				console.log(data);
+				if (data == 1){
+					tr.css({display: "none"});
+				}
+			},
+			error: function(){
+				alert("?? ??????? ??????? ???? ?????????");
+			}
 		});
 	});
 	
