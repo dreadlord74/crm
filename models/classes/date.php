@@ -71,4 +71,9 @@ class date extends abstract_class
 	public function delete_deadline(&$id){
 		return $this->db->query("DELETE FROM deadlines WHERE id=$id")->affected();
 	}
+
+	public function change_work_day(&$id, &$value = 1)
+	{
+		return $this->db->query("UPDATE dates SET is_work_day='$value' WHERE id=$id")->affected();
+	}
 }
