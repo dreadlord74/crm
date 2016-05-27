@@ -18,14 +18,17 @@
         });
     });
 </script>
-<? $dates?>
+<?
+    $dates;
+    $deps = $dep->get_all();
+?>
 <table class="table" style="overflow:scroll; max-width:300%; width: 130%">
     <thead>
     <tr style="background:#00BFFF; color: #fff;">
         <th class="small"></th>
         <th style="width: 40px;"></th>
         <th class="small"></th>
-        <?foreach ($dep->get_all() as $dKey => $value):?>
+        <?foreach ($deps as $dKey => $value):?>
             <th colspan="<?=$value[cols]?>" otdel='<?=$value[id]?>' style="text-align:center"><?=$value[name]?></th>
         <?endforeach?>
         <th style="background: red; color: #fff">Срок сдачи проекта</th>
@@ -34,7 +37,7 @@
         <th>месяц</th>
         <th>дата</th>
         <th>день</th>
-        <?foreach ($dep->get_all() as $value):?>
+        <?foreach ($deps as $value):?>
             <?foreach($worker->get_by_dep_id($value[id]) as $item):?>
                 <th class="th" otdel='<?=$value[id]?>' rab='<?=$item[id]?>' colspan="<?=$item[cols]?>"><?=$item[name]." ".$item[fam]?><img src="<?=VIEW?>/img/add.png"></th>
             <?endforeach?>
@@ -43,14 +46,18 @@
     </tr>
     </thead>
     <tbody>
-    <?foreach ($date->first_get() as $d_key => $item):?>
-        <?$day = get_day_of_week($item[date])?>
+    <?
+        $dat = $date->first_get();
+        $cur_date = date("Y-m-d");
+        $flag = 0;
+    foreach ($dat as $d_key => $item):?>
+        <?$day = get_day_of_week($item[date]); if ($item[date] == $cur_date) $flag = 1;?>
         <tr <?=(date("Y-m-d") == $item[date] ? "today='1' id='today'" : "")?> day-key="<?=$d_key?>" work_day="<?=$item[is_work_day]?>" <?=(!$item[is_work_day] ? "style='display: none;'" : "")?> date-id="<?=$item[id]?>" <?=($day == "пн" ? "class='pn'": "")?>>
             <td><?=get_month($item[date])?></td>
-            <td><?=change_date_view($item[date])?></td>
-            <td><?=$day?></td>
+            <td><?=change_date_view($item[date]).($flag ? (!$dat[$d_key+1][is_work_day] ? "<img work src='".VIEW."/img/work.png' title='Сделать следующий день робочим' />" : "") : "")?></td>
+            <td><?=$day.($flag ? "<img not-work src='".VIEW."/img/relax.png' title='Сделать день неробочим' />" : "")?></td>
 			<?$dates .= "<div>".get_month($item[date])."</div><div>".change_date_view($item[date])."</div><div>".$day."</div>"?>
-            <?foreach($dep->get_all() as $ids):?>
+            <?foreach($deps as $ids):?>
                 <?foreach($worker->get_by_dep_id($ids[id]) as $workers):?>
                     <?$mainT = $main->get_work_by_worker_id_date_id($workers[id], $item[id])?>
                     <?foreach ($mainT as $work):?>
