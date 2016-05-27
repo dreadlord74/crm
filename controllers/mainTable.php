@@ -76,6 +76,13 @@ switch ($do){
 		exit(); 
 		break;
 
+    case "change_work_day":
+
+        echo $date->change_work_day($_POST[id], $_POST[value]);
+
+        exit();
+        break;
+
     default:
 	
 		$main_table = $mysqli->super_query("SELECT * FROM work_table");
