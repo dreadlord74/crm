@@ -2,6 +2,30 @@
 	width: 10px;
 }
 
+.table tbody tr > td:nth-child(2) img,
+.table tbody tr > td:nth-child(3) img{
+	position: absolute;
+	right: 5px;
+	top: calc(50% - 8px);
+	opacity: 0;
+	transition: opacity .5s ease;
+	-o-transition: opacity .5s ease;
+	-ms-transition: opacity .5s ease;
+	-moz-transition: opacity .5s ease;
+	-webkit-transition: opacity .5s ease;
+}
+
+.table tbody tr > td:nth-child(2),
+.table tbody tr > td:nth-child(3){
+	position: relative;
+}
+
+.table tbody tr > td:nth-child(2):hover > img,
+.table tbody tr > td:nth-child(3):hover > img{
+	opacity: 1;
+	cursor: pointer;
+}
+
 body > thead{
 	position: fixed;
 	display: block;
