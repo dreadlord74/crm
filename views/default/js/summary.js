@@ -4,6 +4,13 @@ $(document).ready(function(e) {
         $(this).children("td:eq(0)").attr("rowspan", 5);
     });
 	
+	$(document).on("click", function(e){
+		if ($(e.target).closest(".hidden-list").length) return;
+		
+		$(".hidden-list").hide(300);
+		e.stopPropagation();
+	});
+	
 	resize_content();
 	
 	$(".content .clients").on("change", "input[type=date]", function(){
@@ -45,9 +52,7 @@ $(document).ready(function(e) {
 			data: data,
 			success: function(data){
 				console.log(data);
-				if (data == 0){
-					alert("Не удалось изменить часы");
-				}
+				calc();
 			},
 			error: function(){
 				alert("Не удалось изменить часы");
@@ -55,18 +60,87 @@ $(document).ready(function(e) {
 		});
 	});
 	
-	$(".workers").on("click", "img", function(){
+	$(".workers").on("click", "img:not([set]):not([del])", function(){
 		var parent = $(this).parent("td").parent("tr");
 		var c_id = parent.attr("data-id"), dep_id = parent.attr("dep-id"), worker_id = parent.attr("worker-id"), p_id = parent.index();
 		
-		parent.removeAttr("last").children("td:eq(0)").children("img").remove();
+		parent.removeAttr("last").children("td:eq(0)").children("img:not([set]):not([del])").remove();
 		
-		parent.after("<tr last data-id='"+c_id+"'><td style='height: 21px'><img src='views/default/img/add.png' /></td><td><input size='4' disabled='disabled' type='text' name='days_count' /></td><td></td><td><input disabled='disabled' type='text' size='4' name='plan_h' /></td><td></td><td></td></tr>");
+		parent.after("<tr last data-id='"+c_id+"'><td style='height: 21px'><img set src='views/default/img/settings.png' /><img set='' title='Назначить исполнителя' src='views/default/img/settings.png'><img src='views/default/img/add.png' /></td><td><input size='4' disabled='disabled' type='text' name='days_count' /></td><td></td><td><input disabled='disabled' type='text' size='4' name='plan_h' /></td><td></td><td></td></tr>");
 		$(".months tbody tr:eq("+p_id+")").after($(".months tbody tr:eq("+p_id+")").clone()).removeAttr("last");
 		$(".months tbody tr:eq("+(p_id+1)+") td > input").val("").parent("td").parent("tr").removeAttr("dep-id").removeAttr("worker-id");
 		
 		resize_content();
 	});
+	
+	var focus_tr;
+	
+	$(".workers").on("click", "img[set]", function(){
+		var tr = $(this).parent("td").parent("tr"), id = "", dat, obj = $(this);
+		focus_tr = tr;
+		console.log(tr.attr('sum-id'));
+		$(".workers tbody tr[sum-id="+tr.attr('sum-id')+"]").each(function(index, element) {
+            if ($(this).attr("worker-id")){
+				id += $(this).attr("worker-id")+",";
+			}
+        });
+		
+		if (!id == "")
+			id = id.substr(0, id.length-1);
+			console.log(id);
+		$.ajax({
+			url: "./?do=get_workers&view=worker",
+			type: "POST",
+			data: "ids="+id,
+			success: function(data){
+				console.log(data);
+				dat = $.parseJSON(data);
+				$(".hidden-list").show(300);
+				$(".hidden-list").css({left:   obj.offset().left-5-$(window).scrollLeft()+"px", top: obj.offset().top+18-$(window).scrollTop()+"px"});
+				
+				$(".hidden-list").html('');
+				
+				$.each(dat, function(i, e){
+					var d;
+					$.ajax({
+						url: "./?view=dep&do=get_colors",
+						type: "POST",
+						data: "id="+e.departament,
+						success: function(data){
+							//console.log(data);
+							d = $.parseJSON(data);
+							$(".hidden-list").append("<li dep-id='"+e.departament+"' worker-id='"+e.id+"' style='color: "+d.text_color+"; background: "+d.color+"'>"+d.name+" ("+e.name+")</li>");
+						}
+					});
+				});
+			},
+			error: function(){
+				alert("Не удалось получить список асполнителей");
+			}
+		});
+	});
+	
+	$(".hidden-list").on("click", "li", function(){
+		var data = "summ_id="+focus_tr.attr("sum-id")+"&worker_id="+$(this).attr("worker-id"), obj =  $(this);
+		
+		$.ajax({
+			url: "./?view=summary&do=add_info",
+			type: "POST",
+			data: data,
+			success: function(data){
+				console.log(data);
+				focus_tr.children("td:eq(0)").attr("style", obj.attr("style")).html(obj.html()).parent("tr").attr("dep-id", obj.attr("dep-id")).attr("worker-id", obj.attr("worker-id"));
+				$(".hidden-list").css({display: "none"});
+				focus_tr.children("td").children("input").prop("disabled", false);
+				resize_content();
+			},
+			error: function(){
+				alert("Не удалось добавить исполнителя");
+			}
+		});
+	});
+	
+	$
 	
 	calc();
 	
@@ -152,11 +226,41 @@ $(document).ready(function(e) {
 			}
 		});
 	});
+	
+	$(".workers").on("click", "img[del]", function(){
+		var tr = $(this).parent("td").parent("tr"), obj = $(this);
+		
+		var data = "id="+tr.attr("sum-id")+"&worker_id="+tr.attr("worker-id");
+		
+		$("#modal").modal("show");
+		$("#modal .btn-primary").click(function(){
+			$.ajax({
+				url: "./?view=summary&do=delete_info",
+				type: "POST",
+				data: data,
+				success: function(data){
+					console.log(data);
+					if (data == 1){
+						$("#modal").modal("hide");
+						obj.after('<img set="" title="Назначить исполнителя" src="views/default/img/settings.png">').remove();
+						tr.children("td:not(:eq(1)):not(:eq(2))").html("").removeAttr("style").removeClass("lost");
+						obj.parent("td").removeAttr("style").css({height: "21px"}).html("");
+						obj.children("td").children("input").prop("disabled", true).val("");
+					}
+				},
+				error: function(){
+					$("#modal").modal("hide");
+					alert("Не удалось удалить исполнителя");
+				}
+			});
+		});
+	});
 });
 
+//Функция для синхронизации размеров таблиц
 function resize_content(){
 	$(".content .clients tbody tr:nth-child(5n + 1)").each(function(index, element) {
-        $(this).children("td:eq(0)").css({height: -1+($(".content .workers tbody tr[data-id="+$(this).attr("data-id")+"]").height())*$(".content .workers tbody tr[data-id="+$(this).attr("data-id")+"]").length+"px"});
+        $(this).children("td:eq(0)").css({height: ($(".content .workers tbody tr[data-id="+$(this).attr("data-id")+"]").height())*$(".content .workers tbody tr[data-id="+$(this).attr("data-id")+"]").length+"px"});
     });
 	
 	$(".content .months tbody tr").each(function(index, element) {
