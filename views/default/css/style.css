@@ -467,3 +467,24 @@ table tr:last-child > td{
 	.content input[type=text]{
 		border: none !important;
 	}
+
+	.content .clients tbody tr td:nth-child(1){
+		position: relative;
+	}
+
+		.content .clients tbody tr td:nth-child(1):hover img{
+			opacity: 1;
+			cursor:  pointer;
+		}
+
+		.content .clients tbody tr td:nth-child(1) img{
+			position: absolute;
+			right: 5px;
+			bottom: 5px;
+			opacity: 0;
+			-webkit-transition: opacity .5s ease;
+			-moz-transition: opacity .5s ease;
+			-ms-transition: opacity .5s ease;
+			-o-transition: opacity .5s ease;
+			transition: opacity .5s ease;
+		}
