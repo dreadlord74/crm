@@ -49,11 +49,6 @@ class data_base
         return $this;
     }
 
-    private function set_id($id){
-        $this->q_id = $id;
-        return $this;
-    }
-
     public function get_id(){
         return $this->q_id;
     }
@@ -63,7 +58,9 @@ class data_base
     }
 
     public function get_last_id(){
-        return mysqli_insert_id($this->db);
+        $id = mysqli_insert_id($this->db);
+        $this->free_result();
+        return $id;
     }
 
     public function get_id_db(){
@@ -79,18 +76,14 @@ class data_base
     }
 
     public function affected(){
-        return mysqli_affected_rows($this->db);
+        $count = mysqli_affected_rows($this->db);
+        $this->free_result();
+        return $count;
     }
 
-    /**
-     * Метод для записи логов в БД
-     * @param $action_id - id действия, которое совершил пользователь
-     * @param $opisanie - описание действия
-     */
-    public function write_log($action_id, $opisanie = "", $id = ""){
-        $id = ($id == "") ? $_SESSION[id] : $id;
-        $query = "INSERT INTO history (user_id, action_id, date_time, opisanie) VALUES ('$id', '$action_id', '".date("Y-m-d H:i:s")."', '$opisanie')";
-        $this->db->query($query);
+    private function free_result()
+    {
+        mysqli_free_result($this->q_id);
     }
     /**
      * Запрос в БД
@@ -99,11 +92,12 @@ class data_base
      */
     public function query($query)
     {
-        $this->set_id(mysqli_query($this->db, $query));
-        if ($this->get_id())
-            $this->set_res($this->get_id());
+        $this->q_id = mysqli_query($this->db, $query);
+        if ($this->q_id)
+            $this->set_res($this->q_id);
         else
             $this->display_error(mysqli_error($this->db), mysqli_errno($this->db), $query);
+
         return $this;
     }
     /**
@@ -115,7 +109,7 @@ class data_base
     public function super_query($query, $multi=true){
         if($multi){
             $this->query($query);
-            if ($this->get_id()){
+            if ($this->q_id){
                 $this->result = array();
                 while ($row = mysqli_fetch_assoc($this->q_id)){
                     $this->result[] = $row;
@@ -126,7 +120,6 @@ class data_base
         }else{
             $this->query($query);
             $this->result = mysqli_fetch_assoc($this->get_id());
-            //print_r($this->result);
         }
         $this->rows($this->q_id);
         return $this->get_res();
@@ -194,11 +187,11 @@ body {
 </head>
 <body>
 	<div style="width: 700px;margin: 20px; border: 1px solid #D9D9D9; background-color: #F1EFEF; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3); box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);" >
-		<div class="top" >MySQL Error!</div>
-		<div class="box" ><b>MySQL error</b> in file: <b>{$trace[$level]['file']}</b> at line <b>{$trace[$level]['line']}</b></div>
-		<div class="box" >Error Number: <b>{$error_num}</b></div>
-		<div class="box" >The Error returned was:<br /> <b>{$error}</b></div>
-		<div class="box" ><b>SQL query:</b><br /><br />{$query}</div>
+		<div class="top" >Ошибка MySQL</div>
+		<div class="box" ><b>MySQL ошибка</b> в файле: <b>{$trace[$level]['file']}</b> at line <b>{$trace[$level]['line']}</b></div>
+		<div class="box" >Номер ошибки: <b>{$error_num}</b></div>
+		<div class="box" >Ошибка:<br /> <b>{$error}</b></div>
+		<div class="box" ><b>SQL запрос:</b><br /><br />{$query}</div>
 		</div>
 </body>
 </html>
