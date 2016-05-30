@@ -105,6 +105,34 @@
             </ol>
             <input style="width: 520px" type="button" class="btn-block" value="Добавить клиента" />
         </div>
+        <h2>Архив клиентов</h2>
+        <div class="col-lg-12">
+            <ol class="list-group xd">
+                <?foreach($client->get_archive() as $value):?>
+                    <li>
+                        <input type="hidden" name="id" value="<?=$value[id]?>"/>
+                        <input name="date" id="data" style="text-align: center; width: 125px" type="date" value="<?=$value[date]?>" disabled />
+                        <input style="background: <?=$value[color]?>; color: <?=$value[text_color]?>" type="text" name="name" value="<?=$value[name]?>" />
+                        <input style="background: <?=$value[color]?>; color: <?=$value[text_color]?>" type="text" name="way" value="<?=$value[way]?>" />
+                        <select style="background: <?=$value[color]?>; color: <?=$value[text_color]?>; display: none"name="work_type">
+                            <option value="<?=$value[work_type]?>"><?=$work_type[$value[work_type]]?></option>
+                            <?foreach ($work_type as $key => $type):?>
+                                <?if ($key != $value[work_type]):?>
+                                    <option value="<?=$key?>"><?=$type?></option>
+                                <?endif?>
+                            <?endforeach?>
+                        </select>
+                        <input style="background: <?=$value[color]?>; color: <?=$value[text_color]?>" type="text" name="contract_number" value="<?=$value[contract_number]?>" />
+
+                        <input style="width: 350px; background: <?=$value[color]?>; color: <?=$value[text_color]?>; display: inline-block" type="text" name="all" value="<?=$value[name]." (".$work_type[$value[work_type]].") ".$value[way]." - ".$value[contract_number]?>" disabled />
+                        <input title="Цвет фона" type="color" id="bg-color" name="color" value="<?=$value[color]?>" />
+                        <input title="Цвет текста" type="color" id="t-color" name="text_color" value="<?=$value[text_color]?>" />
+                        <img action="write" class="img-thumbnail control" src="<?=VIEW?>/img/tool.png" />
+                        <!--<img action="delete" class="img-thumbnail control" src="<?=VIEW?>/img/delete.png" />-->
+                    </li>
+                <?endforeach?>
+            </ol>
+        </div>
     </div>
 </div>
 <div id="modal" class="modal fade">
