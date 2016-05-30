@@ -4,6 +4,8 @@ defined("SCRIPT") or die;
 
 require_once MODELS;
 
+//clear($_POST); clear($_GET);
+
 $view = ($_GET['view'] ? $_GET['view'] : "mainTable");
 
 $do = ($_GET['do'] ? $_GET['do'] : "nothing");

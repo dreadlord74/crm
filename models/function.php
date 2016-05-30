@@ -60,3 +60,18 @@ function work_type(&$id){
 	
 	return $work_type[$id];
 }
+
+/**
+ * @param array $arr
+ * Функция очищения вводимых данных
+ */
+function clear(array &$arr)
+{
+    $db = new data_base();
+    foreach ($arr as $key => $item)
+        if (is_array($item))
+            clear($item);
+        else
+            $arr[$key] = strip_tags(mysqli_real_escape_string($db->get_id_db(), $item));
+    unset($db);
+}
