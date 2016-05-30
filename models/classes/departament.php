@@ -158,4 +158,13 @@ class departament extends abstract_class implements base{
                 break;
         }
     }
+
+    /**
+     * @param $id
+     * Метод получения уветов отедела
+     */
+    public function get_colors(&$id)
+    {
+        return $this->db->super_query("SELECT name, color, text_color FROM departaments WHERE id=$id", false);
+    }
 }

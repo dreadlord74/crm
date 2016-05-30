@@ -32,6 +32,13 @@ switch ($do){
         exit();
         break;
 
+    case "get_colors":
+
+        echo json_encode($dep->get_colors($_POST[id]));
+
+        exit();
+        break;
+
     default:
 
         $view = "departament/view";
