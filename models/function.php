@@ -75,3 +75,14 @@ function clear(array &$arr)
             $arr[$key] = strip_tags(mysqli_real_escape_string($db->get_id_db(), $item));
     unset($db);
 }
+
+function check_month(array &$dates, &$date)
+{
+    $db = new data_base();
+    if (date)
+        $res = $db->super_query("SELECT date FROM dates WHERE date='$date' AND id IN (".implode(", ", $dates).")");
+    else
+        $res = 0;
+
+    return ($res ? 1: 0);
+}
