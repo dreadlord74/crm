@@ -51,7 +51,7 @@
         $cur_date = date("Y-m-d");
         $flag = 0;
     foreach ($dat as $d_key => $item):?>
-        <?$day = get_day_of_week($item[date]); if ($item[date] == $cur_date) $flag = 1;?>
+        <?$day = get_day_of_week($item[date])?>
         <tr <?=(date("Y-m-d") == $item[date] ? "today='1' id='today'" : "")?> day-key="<?=$d_key?>" work_day="<?=$item[is_work_day]?>" <?=(!$item[is_work_day] ? "style='display: none;'" : "")?> date-id="<?=$item[id]?>" <?=($day == "пн" ? "class='pn'": "")?>>
             <td><?=get_month($item[date])?></td>
             <td><?=change_date_view($item[date]).($flag ? (!$dat[$d_key+1][is_work_day] ? "<img work src='".VIEW."/img/work.png' title='Сделать следующий день робочим' />" : "") : "")?></td>
@@ -91,6 +91,7 @@
                         </td>
            
         </tr>
+        <?if ($item[date] == $cur_date) $flag = 1?>
     <?endforeach?>
     </tbody>
 </table>
