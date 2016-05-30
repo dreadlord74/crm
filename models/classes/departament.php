@@ -6,24 +6,40 @@
  * Time: 13:25
  */
 
+/**
+ * Class departament
+ * Класс отдела
+ */
 class departament extends abstract_class implements base{
     public $id;
     public $name;
 
+    /**
+     * @param $id
+     * @return string
+     * Возвращает имя отдела по его айди
+     */
     public function get_name_by_id($id)
     {
-        // TODO: Implement get_name_by_id() method.
-
         $name = $this->db->super_query("SELECT name FROM departaments WHERE id=".$id, false);
 
         return $name[name];
     }
 
+    /**
+     * @param $id
+     * @return array
+     * Возвращает отдел по айди
+     */
     public function get_by_id(&$id)
     {
         return $this->db->super_query("SELECT * FROM departaments WHERE id=$id", false);
     }
 
+    /**
+     * @return array
+     * Получает все отделы
+     */
     public function get_all(){
 
         return $this->db->super_query("SELECT * FROM departaments ORDER BY priority");
@@ -34,6 +50,11 @@ class departament extends abstract_class implements base{
 
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Возвращает приоритет
+     */
     public function get_priority_by_id($id){
 
         $priority = $this->db->super_query("SELECT priority FROM departaments WHERE id=".$id, false);
@@ -41,6 +62,11 @@ class departament extends abstract_class implements base{
         return $priority[priority];
     }
 
+    /**
+     * @param $name
+     * @return array
+     * Добавляет отдел
+     */
     public function add($name){
         $query = "INSERT INTO departaments (name) VALUES ('".$name."')";
 
@@ -53,6 +79,15 @@ class departament extends abstract_class implements base{
                );
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $color
+     * @param $text_color
+     * @param string $priority
+     * @return int
+     * Изменяет данные отдела
+     */
     public function write($id, $name, $color, $text_color, $priority = ""){
         if ($priority != $this->get_priority_by_id($id))
             $this->change_priority($id, $priority);
@@ -65,6 +100,11 @@ class departament extends abstract_class implements base{
             return 0;
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Удаляет отдел
+     */
     public function delete($id){
         $result = $this->db->query("DELETE FROM departaments WHERE id=".$id)->affected();
 
@@ -74,6 +114,11 @@ class departament extends abstract_class implements base{
             return 0;
     }
 
+    /**
+     * @param $id
+     * @param $priority
+     * Изменяет приоритет
+     */
     private function change_priority($id, $priority){
 
         //$res = $this->db->super_query("SELECT id FROM departaments WHERE priority=".$priority, false);
@@ -94,6 +139,12 @@ class departament extends abstract_class implements base{
         }
     }
 
+    /**
+     * @param $id
+     * @param string $znak
+     * @param int $count
+     * Изменяет количество колонок в основной таблице
+     */
     public function change_cols_by_id($id, $znak = "+", $count = 2){
         switch ($znak){
             case "+":

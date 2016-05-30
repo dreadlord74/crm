@@ -7,11 +7,24 @@ defined ("SCRIPT") or die ("Сюда нельзя!");
  */
 class data_base
 {
-
+    /**
+     * @var null
+     * Идентификатор запроса
+     */
     private $q_id = null;
 
+    /*
+     * Идентификатор соединения с бд
+     */
     private $db = false;
+
+    /**
+     * @var
+     * Количество строк, которые вернул запрос (?)
+     */
     public $rows;
+
+
     /**
      * Конструктор класса
      * Устанавливает соединение с базой данных
@@ -49,41 +62,78 @@ class data_base
         return $this;
     }
 
+    /**
+     * @return null
+     * Возвращает индентификатор запроса
+     */
     public function get_id(){
         return $this->q_id;
     }
 
+
+    /**
+     * @return mixed
+     * Возвращает результат запроса
+     */
     public function get_res(){
         return $this->result;
     }
 
+    /**
+     * @return int|string
+     * Возвращает id последнего INSERT
+     */
     public function get_last_id(){
         $id = mysqli_insert_id($this->db);
         $this->free_result();
         return $id;
     }
 
+    /**
+     * @return bool|mysqli
+     * Возвращает идентификатор соединения с БД
+     */
     public function get_id_db(){
         return $this->db;
     }
+
+    /**
+     * @param $query
+     * @return $this
+     */
     public function count_rows($query){
         $this->query($query)->set_res(mysqli_num_rows($this->q_id));//оставлено для совме стимости с ранним кодом
         return $this;
     }
+
+    /**
+     * @param $id
+     * @return $this
+     */
     private function rows (&$id){
         $this->rows = mysqli_num_rows($id);
         return $this;
     }
 
+    /**
+     * @return int
+     * Возвращает кол-во строк, которые затроную запрос
+     * Очищает результат
+     */
     public function affected(){
         $count = mysqli_affected_rows($this->db);
         $this->free_result();
         return $count;
     }
 
+    /**
+     * @return $this
+     * Очищает результат
+     */
     private function free_result()
     {
-        mysqli_free_result($this->q_id);
+        //mysqli_free_result($this->q_id);
+        return $this;
     }
     /**
      * Запрос в БД

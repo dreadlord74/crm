@@ -2,6 +2,10 @@
 
 defined("SCRIPT") or die;
 
+/**
+ * Class abstract_class
+ * Пока не знаю зачем он абстрактный
+ */
 abstract class abstract_class{
     protected $db;
 
