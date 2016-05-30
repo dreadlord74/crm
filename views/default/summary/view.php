@@ -91,6 +91,7 @@
                     <tr key="<?=$key?>" sum-id="<?=$sum[id]?>" months="<?=count($months)?>" <?=((count($infos)-1 == $key) && ($workers_counter <= 0) ? "last" : "")?> dep-id="<?=$dep_[id]?>" worker-id="<?=$info[worker_id]?>" data-id="<?=$sum[client_id]?>">
                         <td style="background: <?=$dep_[color]?>; color: <?=$dep_[text_color]?>"><?=$dep_[name]." (".$worker->get_name_by_id($info[worker_id]).")"?>
                            <?=((count($infos)-1 == $key) && ($workers_counter <= 0) ? "<img title='Добавить исполнителя' src='".VIEW."/img/add.png' />" : "")?>
+                            <img src="<?=VIEW?>/img/delete-button.png" del />
                         </td>
                         <td><input type="text" size="4" name="days_count" value="<?=$info[days_count]?>" /></td>
                         <td <?=(strtotime(date("d-m-Y")) >= strtotime($info[date_end]) ? "class='lost'" : "")?>><?=change_date_view($info[date_end])?></td>
@@ -101,7 +102,7 @@
                 <?endforeach?>
                     <?for($i = 1; $i<=$workers_counter; $i++):?>
                         <tr sum-id="<?=$sum[id]?>" months="<?=count($months)?>" <?=($i == $workers_counter ? "last" : "")?> data-id="<?=$sum[client_id]?>">
-                            <td> <?=($i == $workers_counter ? "<img title='Добавить исполнителя' src='".VIEW."/img/add.png' />" : "")?></td>
+                            <td style="height: 21px"><img set title="Назначить исполнителя" src="<?=VIEW?>/img/settings.png" /> <?=($i == $workers_counter ? "<img title='Добавить исполнителя' src='".VIEW."/img/add.png' />" : "")?></td>
                             <td><input disabled="disabled" type="text" size="4" name="days_count" value="" /></td>
                             <td></td>
                             <td><input disabled="disabled" type="text" size="4" name="plan_h" value="" /></td>
@@ -132,7 +133,7 @@
                     ?>
                     <tr key="<?=$key?>" sum-id="<?=$sum[id]?>" months="<?=count($months)?>" <?=((count($infos)-1 == $key) && ($workers_counter <= 0) ? "last" : "")?> dep-id="<?=$dep_[id]?>" worker-id="<?=$info[worker_id]?>" data-id="<?=$sum[client_id]?>">
                         <?foreach($months as $item):?>
-                            <td><input type="text" placeholder="0,0" value="<?=$summary->calc_work_by_dates_id($month_ids[$item], $sum[client_id], $info[worker_id])?>" size="5" disabled="disabled" /></td>
+                            <td <?=(check_month($month_ids[$item], $sum[end_date]) ? "class='dead'" : "")?>><input type="text" placeholder="0,0" value="<?=$summary->calc_work_by_dates_id($month_ids[$item], $sum[client_id], $info[worker_id])?>" size="5" disabled="disabled" /></td>
                         <?endforeach?>
                     </tr>
                 <?endforeach?>
@@ -146,4 +147,23 @@
             <?endforeach?>
         </tbody>
     </table>
+    <ul class="hidden-list">
+
+    </ul>
+</div>
+<div class="modal fade" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Удаление Иисполнителя</h4>
+            </div>
+            <div class="modal-body">
+                Вы действительно хотите этого исполнителя?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
+                <input type="submit" name="submit" class="btn btn-primary" value="Да" />
+            </div>
+        </div>
+    </div>
 </div>
