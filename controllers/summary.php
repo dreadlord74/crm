@@ -36,6 +36,13 @@ switch ($do){
         exit();
         break;
 
+    case "go_to_archive":
+        $client = new client();
+        echo $client->go_to_archive($_POST[id]);
+
+        exit();
+        break;
+
     default:
         $client = new client();
         $date = new date();

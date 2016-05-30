@@ -22,6 +22,11 @@ class summary extends abstract_class
 
     public function write_e_date(&$id, &$date)
     {
+        $client_id = $this->db->super_query("SELECT client_id FROM summary WHERE id=$id", false);
+        $this->db->query("DELETE FROM deadlines WHERE client_id={$client_id[client_id]}");
+        $ids = $this->db->super_query("SELECT id FROM dates WHERE date='$date'", false);
+        $ids = $ids[id];
+        $this->db->query("INSERT INTO deadlines (client_id, date_id) VALUES ('{$client_id[client_id]}', ".$ids.")");
         return $this->db->query("UPDATE summary SET end_date='$date' WHERE id=$id")->affected();
     }
 
