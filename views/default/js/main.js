@@ -57,7 +57,6 @@ $(document).ready(function(e) {
 	$(window).on("keydown", function(e){
 		if (lol == true)
 			if (e.keyCode == 32){
-				console.log(123);
 				
 				$("#fade").addClass("grab");
 
@@ -83,7 +82,6 @@ $(document).ready(function(e) {
 					
 					$(window).scrollLeft($(window).scrollLeft()+(cX - mX));
 					
-					console.log("move");
 					$(window).scrollTop($(window).scrollTop()+(cY - mY));
 				}
 	});
@@ -135,7 +133,6 @@ $(document).ready(function(e) {
 					type: "POST",
 					data: data,
 					success: function(data){
-						console.log(data);
 						if (data == 0)
 							alert("Не удалось изменить текстовое поле.");
 					}
@@ -228,7 +225,6 @@ $(document).ready(function(e) {
 				type: "POST",
 				data: data,
 				success: function(data){
-					console.log(data);
 					if (data == 1){
 						obj.removeAttr("style").removeAttr("work-id").removeAttr("work");
 						
@@ -253,13 +249,11 @@ $(document).ready(function(e) {
 	$(".table").on("click", "img[work]", function(){
 		var tr = $(this).parent("td").parent("tr").next("tr");
 		var data = "id="+tr.attr("date-id")+"&value=1";
-		console.log(data);
 		$.ajax({
 			url: "./?do=change_work_day",
 			type: "POST",
 			data: data,
 			success: function(data){
-				console.log(data);
 				if (data == 1){
 					tr.css({display: "table-row"});
 				}
@@ -273,13 +267,11 @@ $(document).ready(function(e) {
 	$(".table").on("click", "img[not-work]", function(){
 		var tr = $(this).parent("td").parent("tr");
 		var data = "id="+tr.attr("date-id")+"&value=0";
-		console.log(data);
 		$.ajax({
 			url: "./?do=change_work_day",
 			type: "POST",
 			data: data,
 			success: function(data){
-				console.log(data);
 				if (data == 1){
 					tr.css({display: "none"});
 				}
@@ -316,14 +308,12 @@ $(document).ready(function(e) {
 	});*/
 	
 	$(".table").on("change", ".time-input", function(){
-		console.log(123);
 			var data = "time="+$(this).val()+"&id="+$(this).parent("td").prev(".td").attr("work-id");
 			$.ajax({
 					url: "./?view=mainTable&do=write_time",
 					type: "POST",
 					data: data,
 					success: function(data){
-						console.log(data);
 						if (data == 0)
 							alert("Не удалось изменить время.");
 					}
@@ -372,21 +362,20 @@ $(document).ready(function(e) {
 	
 	$(".table").on("click", ".deadline > img", function(){
 		var data = "id="+$(this).parent("td").attr("deadline-id"), obj = $(this);
-		console.log(data);
 		$.ajax({
 			url: "./?do=delete_deadline",
 			type: "POST",
 			data: data,
 			success: function(data){
-				console.log(data);
 				if (data != 0)
 					obj.css({display: "none"}).parent("td").removeAttr("style").removeAttr("deadline-id").children("input").val(" ");
 			}
 		});
 	});
 	
-	$(".hidden").on("click", "li", function(){
-		console.log(123);
+	var wText = 0;
+	
+	$(".hidden").on("click", "li", function(){		
 		var obj = $(this), data, url, sw = -3;
 		//$(this).parent(".show-list").removeClass("show-list");
 		
@@ -395,7 +384,7 @@ $(document).ready(function(e) {
 			url = "./?do=add_deadline";
 			
 			sw = 1;
-		}else if(focusInput.parent("td").hasClass("td") && focusInput.parent(".td").attr("work") !== undefined){
+		}else if(focusInput.parent("td").hasClass("td") && +focusInput.parent(".td").attr("work") == -1){
 			url = "./?do=write_work";
 			var id = focusInput.parent(".td").attr("work");
 			
@@ -409,15 +398,12 @@ $(document).ready(function(e) {
 			
 			sw = 3;
 		}
-			console.log(sw);
-			console.log(url);
-			console.log(data);
 			$.ajax({
 				url: url,
 				type: "POST",
 				data: data,
 				success: function(data){
-					console.log(data);
+					wText = 1;
 					var td = focusInput.parent("td"), inp = focusInput;
 					switch(sw){
 						case 1:
@@ -430,10 +416,7 @@ $(document).ready(function(e) {
 							
 						break;
 						
-						case 2:
-							//focusInput.parent("td").attr("work-id", id);
-						break;
-						
+						case 2:						
 						case 3:
 							//focusInput.parent("td").attr("work-id", data);
 							
@@ -459,6 +442,31 @@ $(document).ready(function(e) {
 		setTimeout(function(){
 			$(".show-list").removeClass("show-list");
 		}, 200);
+	});
+	
+	$(".table").on("change", "input[name=work]", function(){
+		var td = $(this).parent("td"), input = $(this);
+		wText = 0;
+		setTimeout(function(){
+			if ((!td.attr("work-id") || +td.attr("work-id") == -1) && (wText == 0)){
+				var data = "date_id="+td.parent("tr").attr("date-id")+"&id="+td.attr("work-id")+"&dep_id="+td.attr("otdel")+"&worker_id="+td.attr("rab")+"&text="+input.val();
+				$.ajax({
+					url: "./?do=change_text",
+					type: "POST",
+					data: data,
+					success: function(data){
+						if (data){
+							td.attr("work-id", data);
+							td.next("td").children("input").prop("disabled", false).attr("placeholder", 0);
+							td.append('<textarea class="hidden-text" name="description"></textarea><img src="/views/default/img/delete-button.png" />');
+						}
+					},
+					error: function(){
+						alert("?? ??????? ???????? ?????");
+					}
+				});
+			}
+		}, 1500);
 	});
 	
 	$(".table").on("click", ".td", function(){

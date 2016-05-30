@@ -29,7 +29,7 @@ define("FUTURE_DATES", 230);
 define("LAST_MONTHS", 2);
 
 //количества месяцев после текущей даты
-define("NEXT_MONTHS", 5);
+define("NEXT_MONTHS", 4);
 
 //Название
 define("TITLE","ЦРМ");
