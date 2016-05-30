@@ -52,7 +52,8 @@ class workTable extends abstract_class
     }
 
     public function write_work($id, $client_id){
-        return $this->db->query("UPDATE work_table SET client_id='$client_id' WHERE id=$id")->affected();
+        $res = $this->db->query("UPDATE work_table SET client_id='$client_id' WHERE id=$id")->affected();
+        return ($res ? $this->db->super_query("SELECT * FROM work_table WHERE id=$id") : 0);
     }
 
     public function change_text($id, $date_id, $dep_id, $worker_id, $text){
