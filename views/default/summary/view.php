@@ -38,6 +38,7 @@
             <tr sum-id="<?=$sum[id]?>" data-id="<?=$sum[client_id]?>">
                 <td style="background: <?=$cl[color]?>; color: <?=$cl[text_color]?>" class="client">
                     <?=$cl[name]."(".work_type($cl[work_type]).")"." ".$cl[way]." - ".$cl[contract_number]?>
+                    <img archive title="Переместить клиента в архив" src="<?=VIEW?>/img/import.png" />
                 </td>
             </tr>
             <tr sum-id="<?=$sum[id]?>">
