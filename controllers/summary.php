@@ -43,6 +43,19 @@ switch ($do){
         exit();
         break;
 
+    case "add_info":
+
+        echo $summary->add_info($_POST[summ_id], $_POST[worker_id]);
+
+        exit();
+        break;
+
+    case "delete_info":
+
+        echo $summary->delete_info($_POST[id], $_POST[worker_id]);
+        exit();
+        break;
+
     default:
         $client = new client();
         $date = new date();
