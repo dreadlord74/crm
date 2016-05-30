@@ -381,6 +381,8 @@ table tr:last-child > td{
 
 .clients tbody tr[data-id] > td:first-child{
 	height: 100px;
+	font-size: 13px;
+	line-height: 22px;
 }
 
 		.clients tbody tr[data-id]+tr+tr+tr+tr > td:last-child{
@@ -447,7 +449,7 @@ table tr:last-child > td{
 		box-sizing: border-box;
 	}
 
-.content .workers tbody tr[last] > td:first-child{
+.content .workers tbody tr > td{
 	position: relative;
 }
 
@@ -488,3 +490,62 @@ table tr:last-child > td{
 			-o-transition: opacity .5s ease;
 			transition: opacity .5s ease;
 		}
+
+	.content .workers tbody tr > td:nth-child(1):hover > img{
+		opacity: 1;
+		cursor: pointer;
+	}
+
+		.content .workers tbody img[set]{
+			position: absolute;
+			left: 5px;
+			top: calc(50% - 8px);
+			opacity: 0;
+			-webkit-transition: opacity .5s ease;
+			-moz-transition: opacity .5s ease;
+			-ms-transition: opacity .5s ease;
+			-o-transition: opacity .5s ease;
+			transition: opacity .5s ease;
+		}
+
+		.content .workers tbody img[del]{
+			position: absolute;
+			right: -8px !important;
+			top:-8px !important;
+			opacity: 0;
+			-webkit-transition: opacity .5s ease;
+			-moz-transition: opacity .5s ease;
+			-ms-transition: opacity .5s ease;
+			-o-transition: opacity .5s ease;
+			transition: opacity .5s ease;
+			z-index: 2;
+		}
+
+	.content .hidden-list{
+		display: none;
+		position: fixed;
+		min-width: 180px;
+		min-height: 100px;
+		border: 1px solid #000;
+		background: #fff;
+		padding-left: 0 !important;
+	}
+		.content .hidden-list li{
+			width: 100%;
+			cursor: pointer;
+			padding: 5px 8px;
+			list-style: none;
+		}
+
+			.content .hidden-list li:not(:first-child){
+				margin-top: 2px;
+			}
+
+	/*.content .workers tbody tr > td:nth-child(1){
+		padding: 0 !important;
+		min-height: 18px !important;
+	}*/
+
+.content .months .dead{
+	background:  rgb(237, 123, 120);
+}
