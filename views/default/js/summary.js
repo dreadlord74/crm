@@ -131,6 +131,27 @@ $(document).ready(function(e) {
 		});
 		
 	});
+	
+	$(".clients").on("click", "img[archive]", function(){
+		var tr = $(this).parent("td").parent("tr");
+		var data = "id="+tr.attr("data-id");
+		console.log(data);
+		$.ajax({
+			url: "./?view=summary&do=go_to_archive",
+			type: "POST",
+			data: data,
+			success: function(data){
+				console.log(data);
+				if (data == 1){
+					$(".workers tr[sum-id="+tr.attr("sum-id")+"]").css({display: "none"});
+					$(".months tr[sum-id="+tr.attr("sum-id")+"]").css({display: "none"});
+				}
+			},
+			error: function(){
+				alert("Не удалось переместить клиента в архив");
+			}
+		});
+	});
 });
 
 function resize_content(){
