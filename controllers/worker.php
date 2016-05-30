@@ -44,6 +44,13 @@ switch ($do){
         exit();
         break;
 
+    case "get_workers":
+
+        echo json_encode($worker->get_all_without_ids($_POST[ids]));
+
+        exit();
+        break;
+
     default:
 
         $view = "worker/view";

@@ -8,9 +8,11 @@
 
 defined("SCRIPT") or die;
 
+/**
+ * Class worker
+ * Класс для работы с работником
+ */
 class worker extends abstract_class implements base {
-    public $id;
-    public $color;
 
     public $cols;
 
@@ -64,6 +66,12 @@ class worker extends abstract_class implements base {
     public function get_all()
     {
         return $this->db->super_query("SELECT * FROM workers ORDER BY priority");
+    }
+
+    public function get_all_without_ids(&$ids)
+    {
+        $add = ($ids ? " WHERE id NOT IN ($ids)" : "");
+        return $this->db->super_query("SELECT * FROM workers".$add);
     }
 
     public function get_by_dep_id($id){
