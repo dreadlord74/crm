@@ -117,7 +117,7 @@
         <thead>
         <tr>
             <?foreach($months as $item):?>
-                <th class="month">
+                <th class="month <?=(check_month($month_ids[$item], date("Y-m-d")) ? "this" : "")?>">
                     <?=$item?>
                 </th>
             <?endforeach?>
@@ -133,14 +133,14 @@
                     ?>
                     <tr key="<?=$key?>" sum-id="<?=$sum[id]?>" months="<?=count($months)?>" <?=((count($infos)-1 == $key) && ($workers_counter <= 0) ? "last" : "")?> dep-id="<?=$dep_[id]?>" worker-id="<?=$info[worker_id]?>" data-id="<?=$sum[client_id]?>">
                         <?foreach($months as $item):?>
-                            <td <?=(check_month($month_ids[$item], $sum[end_date]) ? "class='dead'" : "")?>><input type="text" placeholder="0,0" value="<?=$summary->calc_work_by_dates_id($month_ids[$item], $sum[client_id], $info[worker_id])?>" size="5" disabled="disabled" /></td>
+                            <td <?=(check_month($month_ids[$item], $sum[end_date]) ? "class='dead'" : "")?>><input type="text" placeholder="0,0" <?=($summary->calc_work_by_dates_id($month_ids[$item], $sum[client_id], $info[worker_id]) ? "value=".round($summary->calc_work_by_dates_id($month_ids[$item], $sum[client_id], $info[worker_id]), 1) : "")?> size="5" disabled="disabled" /></td>
                         <?endforeach?>
                     </tr>
                 <?endforeach?>
                 <?for($i = 1; $i <= $workers_counter; $i++):?>
                     <tr sum-id="<?=$sum[id]?>" months="<?=count($months)?>" <?=($i == $workers_counter ? "last" : "")?> data-id="<?=$sum[client_id]?>">
                         <?foreach($months as $item):?>
-                            <td><input type="text" placeholder="0,0" value="" size="5" disabled="disabled" /></td>
+                            <td><input type="text" placeholder="0,0" size="5" disabled="disabled" /></td>
                         <?endforeach?>
                     </tr>
                 <?endfor?>
@@ -150,6 +150,12 @@
     <ul class="hidden-list">
 
     </ul>
+    <div class="header">
+
+    </div>
+    <div class="h">
+
+    </div>
 </div>
 <div class="modal fade" id="modal">
     <div class="modal-dialog">

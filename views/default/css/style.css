@@ -145,6 +145,7 @@ tr[today] td:not([not-blur]){
 	margin: 0;
 	height: inherit;
 	text-indent: 0 !important;
+	font-size: 13px;
 }
 
 .td > input[disabled],
@@ -253,7 +254,8 @@ table tr:last-child > td{
 			position: absolute;
 		}
 
-			.content .months th{
+			.content .months th,
+			.content .header thead:last-child th{
 				background-color: #ffc599;
 			}
 
@@ -346,7 +348,8 @@ table tr:last-child > td{
 
 	.content .workers th,	.content .workers td,
 	.content .clients th,	.content .clients td,
-	.content .months th,	.content .months td{
+	.content .months th,	.content .months td,
+	.header th{
 		border: 1px solid #dddddd;
 		text-align: center;
 		border-bottom: none;
@@ -548,4 +551,69 @@ table tr:last-child > td{
 
 .content .months .dead{
 	background:  rgb(237, 123, 120);
+	color: #fff !important;
+}
+
+.content .months .dead input::-webkit-input-placeholder{
+	color: #fff;
+}
+
+.content .months .dead input:-ms-input-placeholder{
+	color: #fff;
+}
+
+.content .months .dead input:-moz-placeholder{
+	color: #fff;
+}
+
+.content .months .dead input::-moz-placeholder{
+	color: #fff;
+}
+
+.content .months tbody td:not([class=dead]) > input[value]{
+	background: rgba(0,255,0, .2);
+}
+
+.content .header{
+	position: fixed !important;
+	top: 0;
+	left: 455px;
+	float: none !important;
+	background: #fff;
+	padding: 0 !important;
+	width: 100%;
+	border: none !important;
+}
+
+	.content .header thead{
+		display: inline-block;
+		float: none !important;
+	}
+
+		.content .header thead:not(:first-child){
+			margin-left: -3px;
+		}
+
+.content .h{
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	float: none !important;
+	padding: 0 !important;
+	width: 451px;
+	background: #fff;
+	z-index: 5;
+}
+
+	.content .h thead{
+		display: block;
+	}
+
+	.content .h thead th{
+		border-left:1px solid #dddddd;
+		text-align: center;
+	}
+
+.content .this{
+	background: rgba(255, 197, 153, .5) !important;
 }
