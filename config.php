@@ -26,7 +26,7 @@ define("DB", "crm");
 define("FUTURE_DATES", 230);
 
 //количество месяцев, выводящихся до текущей даты
-define("LAST_MONTHS", 2);
+define("LAST_MONTHS", 5);
 
 //количества месяцев после текущей даты
 define("NEXT_MONTHS", 4);
