@@ -1,4 +1,73 @@
 $(document).ready(function(e) {
+	var headerW = $('.workers thead').width()-6, headerH = $('.workers thead').height(), thsW = [], thsH = [];
+	
+	$('.workers thead tr').each(function(index, element) {
+		thsW[index] = []; thsH[index] = [];
+        $(this).children("th").each(function(i, el) {
+            thsW[index][i] = $(this).width();
+			thsH[index][i] = $(this).height();
+			
+			thsW[index][i] -= 1;
+        });
+    });
+	
+	$('.workers thead tr').each(function(index, element){
+		$(this).children("th").each(function(i, el) {
+            $(this).height(thsH[index][i]).width(thsW[index][i]);
+        });
+	});
+	
+	$(".header").prepend($(".workers thead").clone());
+	
+	$('.header > thead:first-child').css({display: "inline-block", width: headerW, height: headerH, "z-index": 1});
+	
+	var headerW = $('.months thead').width(), headerH = $('.months thead').height(), thsW = [], thsH = [];
+	
+	$('.months thead tr').each(function(index, element) {
+		thsW[index] = []; thsH[index] = [];
+        $(this).children("th").each(function(i, el) {
+            thsW[index][i] = $(this).width();
+			thsH[index][i] = $(this).height();
+        });
+    });
+	
+	var headerW2 = $('.clients thead').width(), headerH2 = $('.clients thead').height(), thsW2 = [], thsH2 = [];
+	
+	$('.clients thead tr').each(function(index, element) {
+		thsW2[index] = []; thsH2[index] = [];
+        $(this).children("th").each(function(i, el) {
+            thsW2[index][i] = $(this).width();
+			thsH2[index][i] = $(this).height();
+        });
+    });
+	
+	$('.clients thead tr').each(function(index, element){
+		$(this).children("th").each(function(i, el) {
+            $(this).height(thsH2[index][i]).width(thsW2[index][i]);
+        });
+	});
+	
+	$(".h").prepend($(".clients thead").clone());
+	
+	$('.h > thead:first-child').css({width: headerW2, height: headerH2, "z-index": 5});
+	
+	$(window).scroll(function(){
+		$(".header").css({left: 455-$(this).scrollLeft()+"px"});
+		$(".clients").css({top: -$(this).scrollTop()+"px"});
+	});
+	
+	$('.months thead tr').each(function(index, element){
+		$(this).children("th").each(function(i, el) {
+            $(this).height(thsH[index][i]).width(thsW[index][i]);
+        });
+	});
+	
+	$(".header").append($(".months thead").clone());
+	
+	$('.header > thead:last-child').css({display: "inline-block", width: headerW, height: headerH, "z-index": 1});
+	
+	//$(".content > .header").append($(".content .workers thead").clone());
+	
 	//высталение rowspan и установка высоты строки клиента в первой таблицы
     $(".content .clients tbody tr:nth-child(5n + 1)").each(function(index, element) {
         $(this).children("td:eq(0)").attr("rowspan", 5);
@@ -62,11 +131,11 @@ $(document).ready(function(e) {
 	
 	$(".workers").on("click", "img:not([set]):not([del])", function(){
 		var parent = $(this).parent("td").parent("tr");
-		var c_id = parent.attr("data-id"), dep_id = parent.attr("dep-id"), worker_id = parent.attr("worker-id"), p_id = parent.index();
+		var c_id = parent.attr("data-id"), dep_id = parent.attr("dep-id"), worker_id = parent.attr("worker-id"), p_id = parent.index(), sum_id = parent.attr("sum-id");
 		
 		parent.removeAttr("last").children("td:eq(0)").children("img:not([set]):not([del])").remove();
 		
-		parent.after("<tr last data-id='"+c_id+"'><td style='height: 21px'><img set src='views/default/img/settings.png' /><img set='' title='Назначить исполнителя' src='views/default/img/settings.png'><img src='views/default/img/add.png' /></td><td><input size='4' disabled='disabled' type='text' name='days_count' /></td><td></td><td><input disabled='disabled' type='text' size='4' name='plan_h' /></td><td></td><td></td></tr>");
+		parent.after("<tr last sum-id='"+sum_id+"' data-id='"+c_id+"'><td style='height: 21px'><img set src='views/default/img/settings.png' /><img set='' title='Назначить исполнителя' src='views/default/img/settings.png'><img src='views/default/img/add.png' /></td><td><input size='4' disabled='disabled' type='text' name='days_count' /></td><td></td><td><input disabled='disabled' type='text' size='4' name='plan_h' /></td><td></td><td></td></tr>");
 		$(".months tbody tr:eq("+p_id+")").after($(".months tbody tr:eq("+p_id+")").clone()).removeAttr("last");
 		$(".months tbody tr:eq("+(p_id+1)+") td > input").val("").parent("td").parent("tr").removeAttr("dep-id").removeAttr("worker-id");
 		
@@ -147,13 +216,17 @@ $(document).ready(function(e) {
 	$(".workers").on("change", "input[name=plan_h]", function(){
 		var tr = $(this).parent("td").parent("tr"), summ_h = 0, substract = 0;
 		
-		$(".workers tr[data-id="+tr.attr("data-id")+"]:not([key="+tr.attr("key")+"]) input[name=plan_h]").each(function(index, element) {
-            summ_h += +$(this).val();
+		$(".workers tr[data-id="+tr.attr("data-id")+"]:not([key="+tr.attr("key")+"])").each(function(index, element) {
+			var obj = $(this).children("td:eq(3)").children("input[name=plan_h]");
+            summ_h += +obj.val();
         });
+		console.log(summ_h);
 		
 		substract = +$(".clients tr[sum-id="+tr.attr("sum-id")+"]:eq(1) input[name=hours]").val() - summ_h;
 		
 		if (+$(this).val() > substract){
+			if (substract < 0)
+				substract = 0;
 			$(this).val(substract);
 		}
 		
@@ -177,9 +250,10 @@ $(document).ready(function(e) {
 	$(".workers tbody tr").on("change", "input[name=days_count]", function(){
 		var tr = $(this).parent("td").parent("tr"), value = +$(this).val(), offset = 0;
 		console.log(123);
-		$(".workers tbody tr[sum-id="+tr.attr("sum-id")+"]:not([key="+tr.attr("key")+"]) input[name=days_count]").each(function(index, element) {
-			if (+$(this).parent("td").parent("tr").attr("key") < +tr.attr("key")){
-				var x = parseInt($(this).val());
+		$(".workers tbody tr[sum-id="+tr.attr("sum-id")+"]:not([key="+tr.attr("key")+"])").each(function(index, element) {
+			var obj = $(this).children("td:eq(0)").children("input[name=days_count]");
+			if (+obj.parent("td").parent("tr").attr("key") < +tr.attr("key")){
+				var x = parseInt(obj.val());
 			if (x)
             	offset += x;
 			}
