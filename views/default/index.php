@@ -19,13 +19,13 @@
 
 ?>
 <div class="row menu table-bordered">
-    <?echo 'Памяти использовано: ',round(memory_get_usage()/1024/1024,2),' MB';?>
+    <?//echo 'Памяти использовано: ',round(memory_get_usage()/1024/1024,2),' MB';?>
     <div class="col-md-12">
         <ul class="list-inline">
-            <li><a href="/">План загруженности</a> </li>
-            <li><a href="/?view=summary">Сводная таблица</a> </li>
-            <li><a href="/?view=dep">Отделы</a> </li>
-            <li><a href="/?view=worker">Работники</a> </li>
+            <li><a href="/">План загруженности</a> |</li>
+            <li><a href="/?view=summary">Сводная таблица</a> |</li>
+            <li><a href="/?view=dep">Отделы</a> |</li>
+            <li><a href="/?view=worker">Работники</a> |</li>
             <li><a href="/?view=client">Клиенты</a> </li>
         </ul>
     </div>
