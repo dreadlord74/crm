@@ -140,11 +140,24 @@ class summary extends abstract_class
         return change_date_view($res[date]);
     }
 
+
+    /**
+     * @param $summ_id
+     * @param $worker_id
+     * @return int
+     * Добавляет исполнителя в сводную таблицу
+     */
     public function add_info(&$summ_id, &$worker_id)
     {
         return $this->db->query("INSERT INTO summary_info (summary_id, worker_id) VALUES ($summ_id, $worker_id)")->affected();
     }
 
+    /**
+     * @param $id
+     * @param $worker_id
+     * @return int
+     * Удаляет исполнителя из сводной таблицы
+     */
     public function delete_info(&$id, &$worker_id)
     {
         return $this->db->query("DELETE FROM summary_info WHERE summary_id=$id AND worker_id=$worker_id")->affected();
