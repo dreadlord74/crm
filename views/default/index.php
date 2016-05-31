@@ -18,8 +18,8 @@
     require_once ($view.".php");
 
 ?>
-<div class="row menu table-bordered">
-    <?//echo 'Памяти использовано: ',round(memory_get_usage()/1024/1024,2),' MB';?>
+<div style="z-index: 5000" class="row menu table-bordered">
+    <?echo 'Памяти использовано: ',round(memory_get_usage()/1024/1024,2),' MB';?>
     <div class="col-md-12">
         <ul class="list-inline">
             <li><a href="/">План загруженности</a> |</li>
