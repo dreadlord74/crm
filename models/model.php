@@ -4,7 +4,7 @@ defined ("SCRIPT") or die ("Сюда нельзя!");
 /**
  * Модель системы
  */
-session_start();
+//session_start();
 
 require_once ("function.php");
 require_once ("interfaces.php");
